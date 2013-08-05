@@ -25,9 +25,9 @@ Background
 
 Sent in a letter to Anders:
 
-    > Första provskottet på cirkelbågar. Det är ett Python-skript som jag kör på PC:n. Det är prototypkvalitét på det, så det är inte robust nånstans, men det visar ungefär vad man kan förvänta sig för utdata.
+> Första provskottet på cirkelbågar. Det är ett Python-skript som jag kör på PC:n. Det är prototypkvalitét på det, så det är inte robust nånstans, men det visar ungefär vad man kan förvänta sig för utdata.
     
-    >Jag har utgått från 158.jxl (den du skickade).  Jag har skjutit in en sista punkt för att uppfylla kravet om att C2 måste följas av en punkt för att få dess tangent.
+> Jag har utgått från 158.jxl (den du skickade).  Jag har skjutit in en sista punkt för att uppfylla kravet om att C2 måste följas av en punkt för att få dess tangent.
 
 Algorithm
 ---------
