@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JOBFile jobName="158" version="5.58" product="Trimble General Survey" productVersion="2.20" productDBVersion="220-8" TimeStamp="2013-07-31T10:07:04"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.trimble.com/schema/JobXML/5_5 http://www.trimble.com/schema/JobXML/5_5/JobXMLSchema-5.58.xsd">
+    <FieldBook>
+
+        <UnitsRecord ID="00000002" TimeStamp="2013-07-31T10:07:04">
+            <DistanceUnits>Metres</DistanceUnits>
+            <HeightUnits>Metres</HeightUnits>
+            <AngleUnits>DMSDegrees</AngleUnits>
+            <AzimuthFormat>Azimuth</AzimuthFormat>
+            <LatitudeLongitudeUnits>DMSDegrees</LatitudeLongitudeUnits>
+            <CoordinateOrder>North-East-Elevation</CoordinateOrder>
+            <TemperatureUnits>Celsius</TemperatureUnits>
+            <PressureUnits>MilliBar</PressureUnits>
+            <GradeUnits>Percentage</GradeUnits>
+            <AreaUnits>SquareMetres</AreaUnits>
+            <VolumeUnits>CubicMetres</VolumeUnits>
+            <StationingFormat>1+000.0</StationingFormat>
+            <StationIndexIncrement/>
+        </UnitsRecord>
+
+        <HorizontalAdjustmentRecord ID="00000004" TimeStamp="2013-07-31T10:07:04">
+            <Type>NoAdjustment</Type>
+        </HorizontalAdjustmentRecord>
+
+        <JobPropertiesRecord ID="00000005" TimeStamp="2013-07-31T10:07:04">
+            <Reference/>
+            <Description/>
+            <Operator/>
+            <JobNote/>
+        </JobPropertiesRecord>
+
+        <LinkedFilesRecord ID="00000006" TimeStamp="2013-07-31T10:07:04"/>
+
+        <ActiveMapFilesRecord ID="00000007" TimeStamp="2013-07-31T10:07:04"/>
+
+        <EllipsoidRecord ID="00000008" TimeStamp="2013-07-31T10:07:04">
+            <EarthRadius>6378137</EarthRadius>
+            <Flattening>0.00335281068751</Flattening>
+        </EllipsoidRecord>
+
+        <ProjectionRecord ID="00000009" TimeStamp="2013-07-31T10:07:04">
+            <Projection>
+                <Type>TransverseMercator</Type>
+                <ShiftGridFileName/>
+                <CentralLatitude>0</CentralLatitude>
+                <CentralLongitude>13.5</CentralLongitude>
+                <FalseNorthing>0</FalseNorthing>
+                <FalseEasting>150000</FalseEasting>
+                <Scale>1</Scale>
+            </Projection>
+            <LocalSite>
+                <Type>Grid</Type>
+                <ProjectLocationLatitude/>
+                <ProjectLocationLongitude/>
+                <ProjectLocationHeight>50</ProjectLocationHeight>
+            </LocalSite>
+        </ProjectionRecord>
+
+        <DatumRecord ID="0000000a" TimeStamp="2013-07-31T10:07:04">
+            <Type>ThreeParameter</Type>
+            <Direction>WGS84ToLocal</Direction>
+            <EarthRadius>6378137</EarthRadius>
+            <Flattening>0.00335281067183</Flattening>
+            <TranslationX>0</TranslationX>
+            <TranslationY>0</TranslationY>
+            <TranslationZ>0</TranslationZ>
+        </DatumRecord>
+
+        <VerticalAdjustmentRecord ID="0000000b" TimeStamp="2013-07-31T10:07:04">
+            <Type>GeoidModel</Type>
+            <GeoidName>SW082000</GeoidName>
+        </VerticalAdjustmentRecord>
+
+        <CoordinateSystemRecord ID="0000000c" TimeStamp="2013-07-31T10:07:04">
+            <SystemName>Sweden (Sweref 99)</SystemName>
+            <ZoneName>13 30</ZoneName>
+            <DatumName>SWEREF 99</DatumName>
+        </CoordinateSystemRecord>
+
+        <CorrectionsRecord ID="0000000e" TimeStamp="2013-07-31T10:07:04">
+            <SouthAzimuth>false</SouthAzimuth>
+            <GridOrientation>IncreasingNorthEast</GridOrientation>
+            <MagneticDeclination>0</MagneticDeclination>
+            <Distances>GridDistance</Distances>
+            <ApplySeaLevelCorrection>true</ApplySeaLevelCorrection>
+            <NeighbourhoodAdjustment>
+                <Applied>false</Applied>
+                <WeightExponent>0.5</WeightExponent>
+            </NeighbourhoodAdjustment>
+        </CorrectionsRecord>
+
+        <FeatureCodingRecord ID="00000010" TimeStamp="2013-07-31T10:07:04">
+            <LibraryName>LundNy</LibraryName>
+            <SourceFilename>LundNy.FXL</SourceFilename>
+            <AttributeCheckSum>0</AttributeCheckSum>
+            <AttributesStored>false</AttributesStored>
+        </FeatureCodingRecord>
+
+        <TimeZoneRecord ID="00000022" TimeStamp="2013-07-31T10:07:24">
+            <ZoneName>Romance Daylight Time</ZoneName>
+            <HoursToUTC>-2</HoursToUTC>
+        </TimeZoneRecord>
+
+        <PointRecord ID="00000023" TimeStamp="2013-07-31T10:15:08">
+            <Name>4</Name>
+            <Code>2 ST</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169666.1674844</North>
+                <East>142022.86480482</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="00000027" TimeStamp="2013-07-31T10:15:23">
+            <Name>5</Name>
+            <Code>2 C1</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169669.6543265</North>
+                <East>142027.33848904</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="0000002b" TimeStamp="2013-07-31T10:15:40">
+            <Name>6</Name>
+            <Code>2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169671.1016949</North>
+                <East>142031.15427851</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="0000002f" TimeStamp="2013-07-31T10:15:59">
+            <Name>7</Name>
+            <Code>2 C2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169669.7859054</North>
+                <East>142035.36480482</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="00000033" TimeStamp="2013-07-31T10:16:45">
+            <Name>8</Name>
+            <Code>2 C1</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169668.0095896</North>
+                <East>142038.32533114</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="00000037" TimeStamp="2013-07-31T10:16:55">
+            <Name>9</Name>
+            <Code>2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169667.6148528</North>
+                <East>142041.6805943</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="0000003b" TimeStamp="2013-07-31T10:17:07">
+            <Name>10</Name>
+            <Code>2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169669.1938001</North>
+                <East>142043.72006798</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="0000003f" TimeStamp="2013-07-31T10:17:15">
+            <Name>11</Name>
+            <Code>2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169670.4438001</North>
+                <East>142045.95691009</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="00000043" TimeStamp="2013-07-31T10:17:27">
+            <Name>12</Name>
+            <Code>2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169670.5753791</North>
+                <East>142048.72006798</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+
+        <PointRecord ID="00000047" TimeStamp="2013-07-31T10:17:47">
+            <Name>13</Name>
+            <Code>2 C2</Code>
+            <Method>Coordinates</Method>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+            <Deleted>false</Deleted>
+
+            <Grid>
+                <North>6169668.2727475</North>
+                <East>142050.69375219</East>
+                <Elevation/>
+            </Grid>
+        </PointRecord>
+    </FieldBook>
+
+    <Reductions>
+
+        <Point>
+            <ID>00000023</ID>
+            <Name>4</Name>
+            <Code>2 ST</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169666.1674844</North>
+                <East>142022.86480482</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>00000027</ID>
+            <Name>5</Name>
+            <Code>2 C1</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169669.6543265</North>
+                <East>142027.33848904</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>0000002b</ID>
+            <Name>6</Name>
+            <Code>2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169671.1016949</North>
+                <East>142031.15427851</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>0000002f</ID>
+            <Name>7</Name>
+            <Code>2 C2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169669.7859054</North>
+                <East>142035.36480482</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>00000033</ID>
+            <Name>8</Name>
+            <Code>2 C1</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169668.0095896</North>
+                <East>142038.32533114</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>00000037</ID>
+            <Name>9</Name>
+            <Code>2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169667.6148528</North>
+                <East>142041.6805943</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>0000003b</ID>
+            <Name>10</Name>
+            <Code>2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169669.1938001</North>
+                <East>142043.72006798</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>0000003f</ID>
+            <Name>11</Name>
+            <Code>2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169670.4438001</North>
+                <East>142045.95691009</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>00000043</ID>
+            <Name>12</Name>
+            <Code>2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169670.5753791</North>
+                <East>142048.72006798</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>00000047</ID>
+            <Name>13</Name>
+            <Code>2 C2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169668.2727475</North>
+                <East>142050.69375219</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+
+        <Point>
+            <ID>00000048</ID>
+            <Name>14</Name>
+            <Code>2</Code>
+            <SurveyMethod>KeyedIn</SurveyMethod>
+            <Classification>Normal</Classification>
+
+            <Grid>
+                <North>6169666.2727475</North>
+                <East>142051.69375219</East>
+                <Elevation/>
+            </Grid>
+        </Point>
+    </Reductions>
+
+    <Environment>
+
+        <DisplaySettings>
+            <DistanceUnits>Metres</DistanceUnits>
+            <HeightUnits>Metres</HeightUnits>
+            <AngleUnits>DMSDegrees</AngleUnits>
+            <AzimuthFormat>Azimuth</AzimuthFormat>
+            <LatitudeLongitudeUnits>DMSDegrees</LatitudeLongitudeUnits>
+            <CoordinateOrder>North-East-Elevation</CoordinateOrder>
+            <TemperatureUnits>Celsius</TemperatureUnits>
+            <PressureUnits>MilliBar</PressureUnits>
+            <GradeUnits>Percentage</GradeUnits>
+            <AreaUnits>SquareMetres</AreaUnits>
+            <VolumeUnits>CubicMetres</VolumeUnits>
+            <StationingFormat>1+000.0</StationingFormat>
+            <StationIndexIncrement/>
+        </DisplaySettings>
+
+        <CoordinateSystem>
+            <SystemName>Sweden (Sweref 99)</SystemName>
+            <ZoneName>13 30</ZoneName>
+            <DatumName>SWEREF 99</DatumName>
+            <Ellipsoid>
+                <EarthRadius>6378137</EarthRadius>
+                <Flattening>0.00335281068751</Flattening>
+            </Ellipsoid>
+            <Projection>
+                <Type>TransverseMercator</Type>
+                <ShiftGridFileName/>
+                <CentralLatitude>0</CentralLatitude>
+                <CentralLongitude>13.5</CentralLongitude>
+                <FalseNorthing>0</FalseNorthing>
+                <FalseEasting>150000</FalseEasting>
+                <Scale>1</Scale>
+                <SouthAzimuth>false</SouthAzimuth>
+                <GridOrientation>IncreasingNorthEast</GridOrientation>
+                <ApplySeaLevelCorrection>true</ApplySeaLevelCorrection>
+            </Projection>
+            <LocalSite>
+                <Type>Grid</Type>
+                <ProjectLocationLatitude/>
+                <ProjectLocationLongitude/>
+                <ProjectLocationHeight>50</ProjectLocationHeight>
+            </LocalSite>
+            <Datum>
+                <Type>ThreeParameter</Type>
+                <Direction>WGS84ToLocal</Direction>
+                <EarthRadius>6378137</EarthRadius>
+                <Flattening>0.00335281067183</Flattening>
+                <TranslationX>0</TranslationX>
+                <TranslationY>0</TranslationY>
+                <TranslationZ>0</TranslationZ>
+            </Datum>
+            <HorizontalAdjustment>
+                <Type>NoAdjustment</Type>
+            </HorizontalAdjustment>
+            <VerticalAdjustment>
+                <Type>GeoidModel</Type>
+                <GeoidName>SW082000</GeoidName>
+            </VerticalAdjustment>
+            <CombinedScaleFactor>
+                <Location>
+                    <Latitude>55.650604843646</Latitude>
+                    <Longitude>13.373536889667</Longitude>
+                    <Height>50</Height>
+                </Location>
+                <Scale>0.99999295583364</Scale>
+            </CombinedScaleFactor>
+        </CoordinateSystem>
+
+        <JobSettings>
+            <NeighbourhoodAdjustment>
+                <Applied>false</Applied>
+                <WeightExponent>0.5</WeightExponent>
+            </NeighbourhoodAdjustment>
+        </JobSettings>
+
+        <AssociatedFiles>
+            <LinkedFiles/>
+            <ActiveMapFiles/>
+            <FeatureCodeLibrary>LundNy.FXL</FeatureCodeLibrary>
+        </AssociatedFiles>
+
+        <TimeZone>
+            <ZoneName>Romance Daylight Time</ZoneName>
+            <HoursToUTC>-2</HoursToUTC>
+        </TimeZone>
+    </Environment>
+</JOBFile>
