@@ -5,7 +5,8 @@
 from xml.etree.ElementTree import parse
 from pprint import pprint
 import pyprocessing as proc
-from math import sqrt
+from math import sqrt, acos
+from random import choice
 
 class Point():
     def __init__(self, name, code, coords):
@@ -47,8 +48,8 @@ def parse_code(c):
 def parse_point(p):
     name = p.find('Name').text
     code = parse_code(p.find('Code').text)
-    coords = (15.0 * (float(p.find('Grid/East').text) - 142000),
-              15.0 * (float(p.find('Grid/North').text) - 6169650))
+    coords = (35.0 * (float(p.find('Grid/East').text) - 142025),
+              35.0 * (float(p.find('Grid/North').text) - 6169660))
     return Point(name, code, coords)
 
 def tangent_from_points(p, q, r):
@@ -58,11 +59,49 @@ def tangent_from_points(p, q, r):
     m = p.y - k * p.x
     return Line(k, m)
     
-def render(points, tangents, problems):
+def solve(problem):
+    print '----solving----'
+    start_x = problem.x
+    start_y = problem.y
+    circles = [ ]
+    best_error = 1000000
+    
+    for k in range(-100000, 100000, 1):
+        k = k / 100.0
+        # Produce new circle center and figure out radius
+        x = start_x + k
+        y = problem.k * x + problem.m
+        radius = distance(problem.a.x, problem.a.y, x, y)
+        
+        # Calculate tangent for a
+        dx = (problem.a.x - x)
+        dy = (problem.a.y - y)
+        a_k = -dx / dy
+        error_a = a_k - problem.p.k
+
+        # Calculate tangent for b
+        dx = (problem.b.x - x)
+        dy = (problem.b.y - y)
+        b_k = -dx / dy
+        error_b = b_k - problem.q.k
+
+        error = sqrt(abs(error_a * error_b))
+        
+        if error < best_error:
+            best_error = error
+            best_x = x
+            best_y = y
+            best_radius = radius
+            
+    angle_a = acos((problem.a.x - best_x)/best_radius)
+    angle_b = acos((problem.b.x - best_x)/best_radius)
+    return (best_x, best_y, best_radius, angle_a, angle_b)
+    
+    
+def render(points, tangents, problems, arcs):
     proc.size(1024, 576)
-    proc.fill(255, 0, 0)
-    for p in points:
-        proc.rect(p.x-2, p.y-2, 4, 4)
+    proc.background(255, 255, 255)
+    proc.smooth()
     for k in range(len(points)):
         if tangents[k]:
             p = points[k]
@@ -72,15 +111,30 @@ def render(points, tangents, problems):
                 y0 = l.k * x0 + l.m
                 x1 = p.x + 5
                 y1 = l.k * x1 + l.m
-                proc.line(x0, y0, x1, y1)
-    proc.fill(0, 255, 0)
-    for problem in problems:
-        proc.rect(problem.x-2, problem.y-2, 4, 4)
-        x0 = problem.x - 5
-        y0 = problem.k * x0 + problem.m
-        x1 = problem.x + 5
-        y1 = problem.k * x1 + problem.m
-        proc.line(x0, y0, x1, y1)
+                # proc.line(x0, y0, x1, y1)
+    if False:
+        proc.fill(0, 255, 0)
+        for problem in problems:
+            proc.rect(problem.x-2, problem.y-2, 4, 4)
+            x0 = problem.x - 5
+            y0 = problem.k * x0 + problem.m
+            x1 = problem.x + 5
+            y1 = problem.k * x1 + problem.m
+            proc.line(x0, y0, x1, y1)
+    # arcs
+    proc.ellipseMode(proc.RADIUS)
+    proc.noFill()
+    for circle in circles:
+        r, g, b = choice(range(192)), choice(range(192)), choice(range(192))
+        proc.stroke(r, g, b, 7)
+        proc.ellipse(circle[0], circle[1], circle[2], circle[2])
+        proc.stroke(r, g, b, 255)
+        proc.arc(circle[0], circle[1], circle[2], circle[2], circle[3], circle[4])
+    # Points
+    proc.fill(255, 0, 0)
+    proc.stroke(0, 0, 0)
+    for p in points:
+        proc.rect(p.x-2, p.y-2, 4, 4)
     proc.run()
 
 def distance(x0, y0, x1, y1):
@@ -128,5 +182,7 @@ if __name__ == '__main__':
             problems.append(formulate_problem(points[k], points[k+1],
                             tangents[k], tangents[k+1]))
     pprint(problems)
-    render(points, tangents, problems)
+    circles = map(solve, problems)
+    pprint(circles)
+    render(points, tangents, problems, circles)
     
