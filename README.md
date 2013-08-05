@@ -25,9 +25,9 @@ Background
 
 Sent in a letter to Anders:
 
-Första provskottet på cirkelbågar. Det är ett Python-skript som jag kör på PC:n. Det är prototypkvalitét på det, så det är inte robust nånstans, men det visar ungefär vad man kan förvänta sig för utdata.
-
-Jag har utgått från 158.jxl (den du skickade).  Jag har skjutit in en sista punkt för att uppfylla kravet om att C2 måste följas av en punkt för att få dess tangent.
+    > Första provskottet på cirkelbågar. Det är ett Python-skript som jag kör på PC:n. Det är prototypkvalitét på det, så det är inte robust nånstans, men det visar ungefär vad man kan förvänta sig för utdata.
+    
+    >Jag har utgått från 158.jxl (den du skickade).  Jag har skjutit in en sista punkt för att uppfylla kravet om att C2 måste följas av en punkt för att få dess tangent.
 
 Algorithm
 ---------
@@ -45,8 +45,4 @@ Algorithm
         * Om den beräknade cirkeln har mindre avvikelse än vad vi tidigare sett, behåll den som bästa lösning för problemet
 * För varje cirkel:
     * Räkna ut en båge
-
-I bilden nedan är de röda boxarna de inmätta punkterna från JobXML-filen. Cirkelkonturerna är cirkeln mellan två punkter med minsta avvikelse. De blå linjerna är de uträknade bågarna från cirklarna.
-
-Som synes är passformen överlag bra för första kurvan. För den andra är kurvan är passformen sådär för de två sista bågarna. Slutsatsen man kan dra är att man får plocka in fler punktern om verkligheten har skarpa vinklar.
 
