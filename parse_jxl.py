@@ -5,7 +5,7 @@
 from xml.etree.ElementTree import parse
 from pprint import pprint
 import pyprocessing as proc
-from math import sqrt, acos
+from math import sqrt, acos, pi
 from random import choice
 
 class Point():
@@ -64,10 +64,11 @@ def solve(problem):
     start_x = problem.x
     start_y = problem.y
     circles = [ ]
-    best_error = 1000000
+    best_error = 1000
     
-    for k in range(-100000, 100000, 1):
-        k = k / 100.0
+    scaler = 1000.0
+    for k in range(-int(1000 * scaler), int(1000 * scaler), 1):
+        k = k / scaler
         # Produce new circle center and figure out radius
         x = start_x + k
         y = problem.k * x + problem.m
@@ -78,14 +79,16 @@ def solve(problem):
         dy = (problem.a.y - y)
         a_k = -dx / dy
         error_a = a_k - problem.p.k
-
+        assert error_a != 0
+        
         # Calculate tangent for b
         dx = (problem.b.x - x)
         dy = (problem.b.y - y)
         b_k = -dx / dy
         error_b = b_k - problem.q.k
+        assert error_a != 0
 
-        error = sqrt(abs(error_a * error_b))
+        error = sqrt(error_a**2 + error_b**2)
         
         if error < best_error:
             best_error = error
@@ -93,8 +96,12 @@ def solve(problem):
             best_y = y
             best_radius = radius
             
-    angle_a = acos((problem.a.x - best_x)/best_radius)
-    angle_b = acos((problem.b.x - best_x)/best_radius)
+    if best_y < problem.a.y:
+        angle_a = acos((problem.a.x - best_x)/best_radius)
+        angle_b = acos((problem.b.x - best_x)/best_radius)
+    else:
+        angle_a = pi + acos((best_x - problem.a.x)/best_radius)
+        angle_b = pi + acos((best_x - problem.b.x)/best_radius)
     return (best_x, best_y, best_radius, angle_a, angle_b)
     
     
@@ -125,10 +132,9 @@ def render(points, tangents, problems, arcs):
     proc.ellipseMode(proc.RADIUS)
     proc.noFill()
     for circle in circles:
-        r, g, b = choice(range(192)), choice(range(192)), choice(range(192))
-        proc.stroke(r, g, b, 7)
+        proc.stroke(127, 127, 127, 15)
         proc.ellipse(circle[0], circle[1], circle[2], circle[2])
-        proc.stroke(r, g, b, 255)
+        proc.stroke(0, 0, 0, 255)
         proc.arc(circle[0], circle[1], circle[2], circle[2], circle[3], circle[4])
     # Points
     proc.fill(255, 0, 0)
