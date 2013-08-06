@@ -4,9 +4,9 @@
 
 from xml.etree.ElementTree import parse
 from pprint import pprint
-import pyprocessing as proc
 from math import sqrt, acos, pi, atan, cos, sin
 from random import choice
+from render import render
 
 class Point():
     def __init__(self, name, code, coords):
@@ -114,47 +114,6 @@ def solve(problem):
     return (best_x, best_y, best_radius, angle_a, angle_b, best_error)
     
     
-def render(points, tangents, problems, arcs, straights):
-    proc.size(1600, 1000)
-    proc.background(255, 255, 255)
-    proc.smooth()
-    for k in range(len(points)):
-        if tangents[k]:
-            p = points[k]
-            l = tangents[k]
-            if l.k and l.m:
-                x0 = p.x - 5
-                y0 = l.k * x0 + l.m
-                x1 = p.x + 5
-                y1 = l.k * x1 + l.m
-                # proc.line(x0, y0, x1, y1)
-    if False:
-        proc.fill(0, 255, 0)
-        for problem in problems:
-            proc.rect(problem.x-2, problem.y-2, 4, 4)
-            x0 = problem.x - 5
-            y0 = problem.k * x0 + problem.m
-            x1 = problem.x + 5
-            y1 = problem.k * x1 + problem.m
-            proc.line(x0, y0, x1, y1)
-    # arcs
-    proc.ellipseMode(proc.RADIUS)
-    proc.noFill()
-    for circle in circles:
-        proc.stroke(127, 127, 127, 15)
-        proc.ellipse(circle[0], circle[1], circle[2], circle[2])
-        proc.stroke(0, 0, 0, 255)
-        proc.arc(circle[0], circle[1], circle[2], circle[2], circle[3], circle[4])
-    # straights
-    proc.stroke(0, 0, 0, 255)
-    for straight in straights:
-        proc.line(straight[0], straight[1], straight[2], straight[3])
-    # Points
-    proc.fill(255, 0, 0)
-    proc.stroke(0, 0, 0)
-    for p in points:
-        proc.rect(p.x-2, p.y-2, 4, 4)
-    proc.run()
 
 def distance(x0, y0, x1, y1):
     return sqrt((y1-y0)**2 + (x1-x0)**2)
