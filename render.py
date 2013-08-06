@@ -2,7 +2,6 @@
 # render.py
 #
 
-import pyprocessing as proc
 from math import tan, pi
 from pprint import pprint
 from util import bounding_box
@@ -15,6 +14,7 @@ TANGENT_LENGTH = 500
 BOX_WIDTH = 16
 
 def render(points, tangents, problems, arcs, straights):
+    import pyprocessing as proc
     bbox = bounding_box(points)
     proc.size(1600, 1000)
     proc.smooth()
