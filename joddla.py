@@ -69,9 +69,6 @@ def solve(problem):
         angle_a = pi + acos((best_x - problem.a.x)/best_radius)
         angle_b = pi + acos((best_x - problem.b.x)/best_radius)
     return (best_x, best_y, best_radius, angle_a, angle_b, best_error)
-
-def distance(x0, y0, x1, y1):
-    return sqrt((y1-y0)**2 + (x1-x0)**2)
     
 def formulate_problem(a, b, p, q):
     # Find midpoint
