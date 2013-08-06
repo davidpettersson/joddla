@@ -1,5 +1,5 @@
-#
 # parse_dxf.py
+#
 #
 
 from pprint import pprint
@@ -9,6 +9,7 @@ from render import render
 from model import Point, Line, Problem
 from parse import read_jobxml
 from util import distance
+from dxf import write_dxf
 
 def tangent_from_points(p, q, r):
     dy = (q.y - r.y)
@@ -33,7 +34,7 @@ def solve(problem):
     print 'first steps', steps[0:10]
     
     horizontal = abs(problem.a.x - problem.b.x) > abs(problem.a.y - problem.b.y)
-    print horizontal
+
     for step in steps:
         if horizontal:
             x = problem.x + step
@@ -62,14 +63,22 @@ def solve(problem):
             best_x = x
             best_y = y
             best_radius = radius
+            best_step = step
             
-    if best_y < problem.a.y:
-        angle_a = acos((problem.a.x - best_x)/best_radius)
-        angle_b = acos((problem.b.x - best_x)/best_radius)
-    else:
-        angle_a = pi + acos((best_x - problem.a.x)/best_radius)
-        angle_b = pi + acos((best_x - problem.b.x)/best_radius)
-    return (best_x, best_y, best_radius, angle_a, angle_b, best_error)
+    angle_a = acos((problem.a.x - best_x)/best_radius)
+    angle_b = acos((problem.b.x - best_x)/best_radius)
+
+    switch = False
+
+    if best_y >= problem.a.y:
+        angle_a = 2 * pi - angle_a
+        switch = True
+    if best_y >= problem.b.y:
+        angle_b = 2 * pi - angle_b
+        switch = True
+
+    print switch
+    return (best_x, best_y, best_radius, angle_a, angle_b, best_error, switch)
     
 def formulate_problem(a, b, p, q):
     # Find midpoint
@@ -83,8 +92,9 @@ def formulate_problem(a, b, p, q):
     c_m = c_y - c_k * c_x
     return Problem(c_x, c_y, c_k, c_m, a, b, p, q)
     
-if __name__ == '__main__':
-    points = read_jobxml('158.jxl')
+   
+def main(filename, render):
+    points = read_jobxml(filename, render)
     pprint(points)
     tangents = [ ]
     active = False
@@ -128,5 +138,11 @@ if __name__ == '__main__':
     pprint(problems)
     circles = map(solve, problems)
     pprint(circles)
-    render(points, tangents, problems, circles, lines)
+    if render:
+        render(points, tangents, problems, circles, lines)
+    else:
+        write_dxf(filename + '.dxf', points, lines, circles)
+    
+if __name__ == '__main__':
+    main('158.jxl', False)
     

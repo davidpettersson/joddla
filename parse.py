@@ -20,14 +20,15 @@ def parse_point(p):
               float(p.find('Grid/North').text))
     return Point(name, code, coords)
 
-def read_jobxml(filename):
+def read_jobxml(filename, adjust=False):
     tree = parse(filename)
     root = tree.getroot()
     points = [ parse_point(point) for point in root.findall('.//Point') ]
     bbox = bounding_box(points)
-    for point in points:
-        point.x -= bbox['min_x']
-        point.y -= bbox['min_y']
-        point.x *= 100.0
-        point.y *= 100.0
+    if adjust:
+        for point in points:
+            point.x -= bbox['min_x']
+            point.y -= bbox['min_y']
+            point.x *= 100.0
+            point.y *= 100.0
     return points
