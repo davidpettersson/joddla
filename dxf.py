@@ -2,11 +2,14 @@
 # dxf.py
 #
 
-import ezdxf
 from math import degrees
+
+import ezdxf
+
 
 LAYER_GEOM = 'Geometries'
 LAYER_ANNO = 'Annotations'
+
 
 def write_dxf(filename, points, lines, arcs):
     dwg = ezdxf.new(dxfversion='AC1024') # AutoCAD 2010
@@ -28,7 +31,4 @@ def write_dxf(filename, points, lines, arcs):
         text.set_pos((point.x, point.y), align='TOP_LEFT')
         text.set_dxf_attrib('height', 0.75)
         text.set_dxf_attrib('layer', LAYER_ANNO)
-        
     dwg.saveas(filename)
-    
-    
