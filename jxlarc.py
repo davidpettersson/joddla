@@ -2,55 +2,12 @@
 # parse_dxf.py
 #
 
-from xml.etree.ElementTree import parse
 from pprint import pprint
 from math import sqrt, acos, pi, atan, cos, sin
-from random import choice
+
 from render import render
-
-class Point():
-    def __init__(self, name, code, coords):
-        self.name = name
-        self.code = code
-        self.coords = coords
-        self.x = coords[0]
-        self.y = coords[1]
-    def __repr__(self):
-        return u'Point(%s,%s,(%f,%f))' % (self.name, self.code, self.x, self.y)
-
-class Line():
-    def __init__(self, k, m):
-        self.k = k
-        self.m = m
-    def __repr__(self):
-        return u'Line(%f,%f)' % (self.k, self.m)
-
-class Problem():
-    def __init__(self, x, y, k, m, a, b, p, q):
-        self.x = x
-        self.y = y
-        self.k = k
-        self.m = m
-        self.a = a
-        self.b = b
-        self.p = p
-        self.q = q
-    def __repr__(self):
-        return u'Problem(%f,%f,%f,%f,%s,%s,%s,%s)' % (self.x, self.y, self.k, self.m, self.a, self.b, self.p, self.q)
-
-def parse_code(c):
-    parts = c.split()
-    if len(parts) == 1:
-        return ''
-    else:
-        return parts[1]
-        
-def parse_point(p):
-    name = p.find('Name').text
-    code = parse_code(p.find('Code').text)
-    coords = (55.0 * (float(p.find('Grid/East').text) - 142025),
-              55.0 * (float(p.find('Grid/North').text) - 6169660))
-    return Point(name, code, coords)
+from model import Point, Line, Problem
+from parse import read_jobxml
 
 def tangent_from_points(p, q, r):
     dy = (q.y - r.y)
@@ -112,8 +69,6 @@ def solve(problem):
         angle_a = pi + acos((best_x - problem.a.x)/best_radius)
         angle_b = pi + acos((best_x - problem.b.x)/best_radius)
     return (best_x, best_y, best_radius, angle_a, angle_b, best_error)
-    
-    
 
 def distance(x0, y0, x1, y1):
     return sqrt((y1-y0)**2 + (x1-x0)**2)
@@ -131,9 +86,7 @@ def formulate_problem(a, b, p, q):
     return Problem(c_x, c_y, c_k, c_m, a, b, p, q)
     
 if __name__ == '__main__':
-    tree = parse('158.jxl')
-    root = tree.getroot()
-    points = [ parse_point(point) for point in root.findall('.//Point') ]
+    points = read_jobxml('158.jxl')
     pprint(points)
     tangents = [ ]
     active = False
