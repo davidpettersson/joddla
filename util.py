@@ -3,6 +3,7 @@
 #
 
 from pprint import pprint
+from math import sqrt
 
 def bounding_box(points):
     bbox = {
