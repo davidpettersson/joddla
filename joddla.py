@@ -8,6 +8,7 @@ from math import sqrt, acos, pi, atan, cos, sin
 from render import render
 from model import Point, Line, Problem
 from parse import read_jobxml
+from util import distance
 
 def tangent_from_points(p, q, r):
     dy = (q.y - r.y)
