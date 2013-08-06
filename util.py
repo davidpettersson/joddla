@@ -21,3 +21,6 @@ def bounding_box(points):
     print 'Bounding box:'
     pprint(bbox)
     return bbox
+
+def distance(x0, y0, x1, y1):
+    return sqrt((y1-y0)**2 + (x1-x0)**2)
