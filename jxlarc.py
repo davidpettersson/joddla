@@ -48,8 +48,8 @@ def parse_code(c):
 def parse_point(p):
     name = p.find('Name').text
     code = parse_code(p.find('Code').text)
-    coords = (35.0 * (float(p.find('Grid/East').text) - 142025),
-              35.0 * (float(p.find('Grid/North').text) - 6169660))
+    coords = (55.0 * (float(p.find('Grid/East').text) - 142025),
+              55.0 * (float(p.find('Grid/North').text) - 6169660))
     return Point(name, code, coords)
 
 def tangent_from_points(p, q, r):
@@ -75,7 +75,7 @@ def solve(problem):
     print 'first steps', steps[0:10]
     
     horizontal = abs(problem.a.x - problem.b.x) > abs(problem.a.y - problem.b.y)
-    
+    print horizontal
     for step in steps:
         if horizontal:
             x = problem.x + step
@@ -114,8 +114,8 @@ def solve(problem):
     return (best_x, best_y, best_radius, angle_a, angle_b, best_error)
     
     
-def render(points, tangents, problems, arcs):
-    proc.size(1024, 576)
+def render(points, tangents, problems, arcs, straights):
+    proc.size(1600, 1000)
     proc.background(255, 255, 255)
     proc.smooth()
     for k in range(len(points)):
@@ -145,6 +145,10 @@ def render(points, tangents, problems, arcs):
         proc.ellipse(circle[0], circle[1], circle[2], circle[2])
         proc.stroke(0, 0, 0, 255)
         proc.arc(circle[0], circle[1], circle[2], circle[2], circle[3], circle[4])
+    # straights
+    proc.stroke(0, 0, 0, 255)
+    for straight in straights:
+        proc.line(straight[0], straight[1], straight[2], straight[3])
     # Points
     proc.fill(255, 0, 0)
     proc.stroke(0, 0, 0)
@@ -190,14 +194,29 @@ if __name__ == '__main__':
                 tangent = None
         tangents.append(tangent)
     pprint(tangents)
+    lines = [ ]
+    active = False
+    for k in range(1, len(points)):
+        if active:
+            pass
+        else:
+            lines.append((points[k-1].x, points[k-1].y, points[k].x, points[k].y))
+            
+        if points[k].code == 'C1':
+            active = True
+        elif points[k].code == 'C2':
+            active = False
+        else:
+            pass
+    pprint(lines)
     # get problems that need to be solved
     problems = [ ]
     for k in range(len(points) - 1):
-        if tangents[k] and tangents[k+1]:
+        if tangents[k] and tangents[k+1] and points[k].code != 'C2' and points[k+1] != 'C1':
             problems.append(formulate_problem(points[k], points[k+1],
                             tangents[k], tangents[k+1]))
     pprint(problems)
     circles = map(solve, problems)
     pprint(circles)
-    render(points, tangents, problems, circles)
+    render(points, tangents, problems, circles, lines)
     
