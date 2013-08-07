@@ -43,8 +43,8 @@ def solve(problem):
     best_radius = 0.0
 
     step_size = 0.1
-    step_start = -1000.0
-    step_stop = 1000.0
+    step_start = -100000.0
+    step_stop = 100000.0
     step_distance = step_stop - step_start
     step_count = step_distance / step_size
 
