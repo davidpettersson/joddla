@@ -17,7 +17,7 @@
 #
 
 from xml.etree.ElementTree import parse
-from model import Point
+from joddla.model import Point
 from util import bounding_box
 
 
