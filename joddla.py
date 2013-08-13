@@ -22,7 +22,7 @@ import sys
 
 from render import draw_screen
 from joddla.model import Line, Problem
-from parse import read_jobxml
+from joddla.jobxml import load
 from util import distance
 from dxf import write_dxf
 
@@ -57,8 +57,8 @@ def solve(problem):
     best_radius = 0.0
 
     step_size = 0.1
-    step_start = -100000.0
-    step_stop = 100000.0
+    step_start = -10000.0
+    step_stop = 10000.0
     step_distance = step_stop - step_start
     step_count = step_distance / step_size
 
@@ -113,7 +113,13 @@ def solve(problem):
 
 
 def main(filename, render):
-    points = read_jobxml(filename, render)
+    if render:
+        center = True
+        scale = 100.0
+    else:
+        center = False
+        scale = None
+    points = load(filename, center, scale)
     pprint(points)
     tangents = []
     active = False

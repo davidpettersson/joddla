@@ -1,5 +1,5 @@
 #
-# parse.py
+# jobxml.py
 #
 # Copyright (C) 2013 City of Lund (Lunds kommun)
 #
@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-from xml.etree.ElementTree import parse
+from xml.etree.ElementTree import fromstring
 from joddla.model import Point
 from util import bounding_box
 
@@ -37,15 +37,20 @@ def parse_point(p):
     return Point(name, code, coords)
 
 
-def read_jobxml(filename, adjust=False):
-    tree = parse(filename)
-    root = tree.getroot()
+def load(filename, center=False, scale=None):
+    return loads(open(filename, 'rb').read(), center, scale)
+
+
+def loads(s, center=False, scale=None):
+    root = fromstring(s)
     points = [parse_point(point) for point in root.findall('.//Point')]
     bbox = bounding_box(points)
-    if adjust:
+    if center:
         for point in points:
-            point.x -= bbox['min_x']
-            point.y -= bbox['min_y']
-            point.x *= 100.0
-            point.y *= 100.0
+            point.x -= bbox['min_x'] + (bbox['max_x'] - bbox['min_x'])
+            point.y -= bbox['min_y'] + (bbox['max_y'] - bbox['min_y'])
+    if scale:
+        for point in points:
+            point.x *= scale
+            point.y *= scale
     return points
