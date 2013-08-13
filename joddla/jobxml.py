@@ -1,6 +1,3 @@
-#
-# jobxml.py
-#
 # Copyright (C) 2013 City of Lund (Lunds kommun)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
 
 from xml.etree.ElementTree import fromstring
 from joddla.model import Point
 from util import bounding_box
 
 
-def parse_code(c):
+def _parse_code(c):
     parts = c.split()
     if len(parts) == 1:
         return ''
@@ -29,12 +26,14 @@ def parse_code(c):
         return parts[1]
 
 
-def parse_point(p):
+def _parse_point(p):
+    ident = int(p.find('ID').text, 16)
     name = p.find('Name').text
-    code = parse_code(p.find('Code').text)
+    code = _parse_code(p.find('Code').text)
     coords = (float(p.find('Grid/East').text),
-              float(p.find('Grid/North').text))
-    return Point(name, code, coords)
+              float(p.find('Grid/North').text),
+              float(p.find('Grid/Elevation').text))
+    return Point(ident, name, code, coords)
 
 
 def load(filename, center=False, scale=None):
@@ -43,7 +42,7 @@ def load(filename, center=False, scale=None):
 
 def loads(s, center=False, scale=None):
     root = fromstring(s)
-    points = [parse_point(point) for point in root.findall('.//Point')]
+    points = [_parse_point(point) for point in root.findall('.//Point')]
     bbox = bounding_box(points)
     if center:
         for point in points:

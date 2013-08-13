@@ -18,4 +18,4 @@
 
 from distutils.core import setup
 
-setup(console=['joddla.py'])
+setup(console=['joddla.py'], requires=['nose'])
