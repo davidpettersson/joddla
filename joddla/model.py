@@ -1,4 +1,3 @@
-#
 # Copyright (C) 2013 City of Lund (Lunds kommun)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
 
 class Point():
-    def __init__(self, name, code, coords):
+    def __init__(self, ident, name, code, coords):
+        self.ident = ident
         self.name = name
         self.code = code
         self.coords = coords
@@ -28,7 +27,7 @@ class Point():
             self.z = self.elevation = 0
 
     def __repr__(self):
-        return u'Point(%s,%s,(%f,%f,%f))' % (self.name, self.code, self.x, self.y, self.z)
+        return u'Point(%d,%s,%s,(%f,%f,%f))' % (self.ident, self.name, self.code, self.x, self.y, self.z)
 
 
 class Line():
