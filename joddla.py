@@ -21,7 +21,7 @@ from math import sqrt, acos, pi
 import sys
 
 from render import draw_screen
-from model import Line, Problem
+from joddla.model import Line, Problem
 from parse import read_jobxml
 from util import distance
 from dxf import write_dxf

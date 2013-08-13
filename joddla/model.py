@@ -1,6 +1,4 @@
 #
-# model.py
-#
 # Copyright (C) 2013 City of Lund (Lunds kommun)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,9 +22,13 @@ class Point():
         self.coords = coords
         self.x = coords[0]
         self.y = coords[1]
+        if len(coords) == 3:
+            self.z = self.elevation = coords[2]
+        else:
+            self.z = self.elevation = 0
 
     def __repr__(self):
-        return u'Point(%s,%s,(%f,%f))' % (self.name, self.code, self.x, self.y)
+        return u'Point(%s,%s,(%f,%f,%f))' % (self.name, self.code, self.x, self.y, self.z)
 
 
 class Line():
