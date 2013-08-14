@@ -1,6 +1,3 @@
-#
-# dxf.py
-#
 # Copyright (C) 2013 City of Lund (Lunds kommun)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
 from math import degrees
 
@@ -25,7 +21,7 @@ LAYER_GEOM = 'Geometries'
 LAYER_ANNO = 'Annotations'
 
 
-def write_dxf(filename, points, lines, arcs):
+def dump(filename, points, lines, arcs):
     dwg = ezdxf.new(dxfversion='AC1024')  # AutoCAD 2010
     layout = dwg.modelspace()
     for line in lines:
