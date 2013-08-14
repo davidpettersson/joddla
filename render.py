@@ -1,6 +1,3 @@
-#
-# render.py
-#
 # Copyright (C) 2013 City of Lund (Lunds kommun)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-from util import bounding_box
+
+from joddla.model import BoundingBox
+
 
 RENDER_PROBLEMS = True
 RENDER_TANGENTS = True
@@ -29,16 +27,16 @@ BOX_WIDTH = 16
 def draw_screen(points, tangents, problems, arcs, straights):
     import pyprocessing as proc
 
-    bbox = bounding_box(points)
+    bbox = BoundingBox(points)
     proc.size(1600, 1000)
     proc.smooth()
-    eye_x = bbox['min_x'] + bbox['width'] / 2.0
-    eye_y = bbox['min_y'] + bbox['height'] / 2.0
+    eye_x = bbox.min_x + bbox.width / 2.0
+    eye_y = bbox.min_y + bbox.height / 2.0
     # eye_z = (bbox['height'] / 2.0) / tan(pi * 30.0 / 180.0)
-    eye_z = max(bbox['width'], bbox['height'])
+    eye_z = max(bbox.width, bbox.height)
     print eye_x, eye_y, eye_z
-    center_x = bbox['min_x'] + bbox['width'] / 2.0
-    center_y = bbox['min_y'] + bbox['height'] / 2.0
+    center_x = bbox.min_x + bbox.width / 2.0
+    center_y = bbox.min_y + bbox.height / 2.0
     print center_x, center_y
     proc.camera(
         eye_x,

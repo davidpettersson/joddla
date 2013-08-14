@@ -18,7 +18,7 @@ from unittest import TestCase
 from nose.tools import assert_equal, assert_raises
 from numpy import array
 
-from joddla.model import Point
+from joddla.model import Point, BoundingBox
 
 
 class PointTest(TestCase):
@@ -35,4 +35,31 @@ class PointTest(TestCase):
 
     def test_constructor_too_few_coords(self):
         with assert_raises(Exception):
-            p = Point(74, 'foo', 'bar', array([1, 2]))
+            Point(74, 'foo', 'bar', array([1, 2]))
+
+
+class BoundingBoxTest(TestCase):
+    def test_no_points(self):
+        with assert_raises(Exception):
+            BoundingBox([])
+
+    def test_single_point(self):
+        bb = BoundingBox([Point(1, 'a', 'b', array([1, 2, 3]))])
+        assert_equal(bb.min_x, 1)
+        assert_equal(bb.min_y, 2)
+        assert_equal(bb.min_z, 3)
+        assert_equal(bb.max_x, 1)
+        assert_equal(bb.max_y, 2)
+        assert_equal(bb.max_z, 3)
+
+    def test_two_points(self):
+        bb = BoundingBox([
+            Point(1, 'a', 'b', array([1, 2, 3])),
+            Point(1, 'a', 'b', array([-1, -2, -3]))
+        ])
+        assert_equal(bb.min_x, -1)
+        assert_equal(bb.min_y, -2)
+        assert_equal(bb.min_z, -3)
+        assert_equal(bb.max_x, 1)
+        assert_equal(bb.max_y, 2)
+        assert_equal(bb.max_z, 3)
