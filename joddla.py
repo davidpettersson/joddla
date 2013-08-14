@@ -23,8 +23,11 @@ import sys
 from render import draw_screen
 from joddla.model import Line, Problem
 from joddla.jobxml import load
-from util import distance
 from dxf import write_dxf
+
+
+def distance(x0, y0, x1, y1):
+    return sqrt((y1 - y0) ** 2 + (x1 - x0) ** 2)
 
 
 def tangent_from_points(p, q, r):
