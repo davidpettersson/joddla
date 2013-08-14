@@ -14,8 +14,7 @@
 
 
 from xml.etree.ElementTree import fromstring
-from joddla.model import Point
-from util import bounding_box
+from joddla.model import Point, BoundingBox
 
 
 def _parse_code(c):
@@ -43,13 +42,15 @@ def load(filename, center=False, scale=None):
 def loads(s, center=False, scale=None):
     root = fromstring(s)
     points = [_parse_point(point) for point in root.findall('.//Point')]
-    bbox = bounding_box(points)
+    bbox = BoundingBox(points)
     if center:
         for point in points:
-            point.x -= bbox['min_x'] + (bbox['max_x'] - bbox['min_x'])
-            point.y -= bbox['min_y'] + (bbox['max_y'] - bbox['min_y'])
+            point.x -= bbox.min_x + bbox.width
+            point.y -= bbox.min_y + bbox.height
+            point.z -= bbox.min_z + bbox.depth
     if scale:
         for point in points:
             point.x *= scale
             point.y *= scale
+            point.z *= scale
     return points
