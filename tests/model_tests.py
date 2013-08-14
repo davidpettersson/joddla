@@ -15,30 +15,24 @@
 
 from unittest import TestCase
 
-from nose.tools import assert_equal
+from nose.tools import assert_equal, assert_raises
+from numpy import array
 
 from joddla.model import Point
 
 
 class PointTest(TestCase):
-    def test_constructor_xy(self):
-        p = Point(74, 'foo', 'bar', [1, 2])
+    def test_constructor(self):
+        p = Point(74, 'foo', 'bar', array([1, 2, 3]))
         assert p.ident == 74
         assert p.name == 'foo'
         assert p.code == 'bar'
-        assert p.coords == [1, 2]
-        assert p.x == 1
-        assert p.y == 2
-        assert p.z == 0
-        assert p.elevation == 0
-
-    def test_constructor_xyz(self):
-        p = Point(19, 'foo', 'bar', [1, 2, 3])
-        assert p.ident == 19
-        assert p.name == 'foo'
-        assert p.code == 'bar'
-        assert p.coords == [1, 2, 3]
+        assert p.coords.all() == array([1, 2, 3]).all()
         assert p.x == 1
         assert p.y == 2
         assert p.z == 3
         assert p.elevation == 3
+
+    def test_constructor_too_few_coords(self):
+        with assert_raises(Exception):
+            p = Point(74, 'foo', 'bar', array([1, 2]))
