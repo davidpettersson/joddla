@@ -14,4 +14,4 @@
 
 from distutils.core import setup
 
-setup(console=['joddla.py'], requires=['nose', 'numpy', 'ezdxf'])
+setup(console=['joddla.py'], requires=['nose', 'numpy', 'ezdxf', 'pyprocessing'])
