@@ -21,10 +21,7 @@ class Point():
         self.coords = coords
         self.x = coords[0]
         self.y = coords[1]
-        if len(coords) == 3:
-            self.z = self.elevation = coords[2]
-        else:
-            self.z = self.elevation = 0
+        self.z = self.elevation = coords[2]
 
     def __repr__(self):
         return u'Point(%d,%s,%s,(%f,%f,%f))' % (self.ident, self.name, self.code, self.x, self.y, self.z)
