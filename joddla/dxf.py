@@ -21,11 +21,13 @@ LAYER_GEOM = 'Geometries'
 LAYER_ANNO = 'Annotations'
 
 
-def dump(filename, points, lines, arcs):
+def dump(filename, points, line_segments, arcs):
     dwg = ezdxf.new(dxfversion='AC1024')  # AutoCAD 2010
     layout = dwg.modelspace()
-    for line in lines:
-        l = layout.add_line((line[0], line[1]), (line[2], line[3]))
+    for line in line_segments:
+        l = layout.add_line(
+            line.a.coords,
+            line.b.coords)
         l.set_dxf_attrib('layer', LAYER_GEOM)
     for arc in arcs:
         if arc[6]:
