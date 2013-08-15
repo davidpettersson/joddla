@@ -64,10 +64,10 @@ def draw_screen(points, tangents, problems, arcs, straights):
     if RENDER_PROBLEMS:
         proc.fill(0, 255, 0)
         for problem in problems:
-            proc.rect(problem.x - BOX_WIDTH / 2.0, problem.y - BOX_WIDTH / 2.0, BOX_WIDTH, BOX_WIDTH)
-            x0 = problem.x - 5
+            proc.rect(problem.c[0] - BOX_WIDTH / 2.0, problem.c[1] - BOX_WIDTH / 2.0, BOX_WIDTH, BOX_WIDTH)
+            x0 = problem.c[0] - 5
             y0 = problem.k * x0 + problem.m
-            x1 = problem.x + 5
+            x1 = problem.c[0] + 5
             y1 = problem.k * x1 + problem.m
             proc.line(x0, y0, x1, y1)
             # arcs
