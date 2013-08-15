@@ -78,7 +78,7 @@ class Slope(object):
             return inf
 
     def __repr__(self):
-        return u'Slope(%f)' % self.k
+        return u'Slope(%f)' % self.k()
 
 
 class LineSegment(object):
