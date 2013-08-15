@@ -58,13 +58,13 @@ def solve(problem):
         dx = (problem.a.x() - x)
         dy = (problem.a.y() - y)
         a_k = -dx / dy
-        error_a = a_k - problem.p.k
+        error_a = a_k - problem.p.k()
 
         # Calculate tangent for b
         dx = (problem.b.x() - x)
         dy = (problem.b.y() - y)
         b_k = -dx / dy
-        error_b = b_k - problem.q.k
+        error_b = b_k - problem.q.k()
 
         error = sqrt(error_a ** 2 + error_b ** 2)
 
