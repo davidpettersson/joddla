@@ -33,7 +33,7 @@ def solve(problem):
     best_y = 0.0
     best_radius = 0.0
 
-    step_size = 1
+    step_size = 0.1
     step_start = -10000.0
     step_stop = 10000.0
     step_distance = step_stop - step_start
@@ -71,6 +71,9 @@ def solve(problem):
     angle_a = acos((problem.a.x() - best_x) / best_radius)
     angle_b = acos((problem.b.x() - best_x) / best_radius)
 
+    dz = problem.b.z() - problem.a.z()
+    best_z = problem.a.z() + dz / 2.0
+
     switch = False
 
     if best_y >= problem.a.y():
@@ -80,7 +83,7 @@ def solve(problem):
         angle_b = 2 * pi - angle_b
         switch = True
 
-    return best_x, best_y, best_radius, angle_a, angle_b, best_error, switch
+    return best_x, best_y, best_z, best_radius, angle_a, angle_b, best_error, switch
 
 
 def main(filename, render):
