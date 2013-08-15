@@ -40,7 +40,7 @@ def dump(filename, points, line_segments, arcs):
         if point.code:
             s += ' (%s)' % point.code
         text = layout.add_text(s)
-        text.set_pos((point.x, point.y), align='TOP_LEFT')
+        text.set_pos((point.x(), point.y()), align='TOP_LEFT')
         text.set_dxf_attrib('height', 0.75)
         text.set_dxf_attrib('layer', LAYER_ANNO)
     dwg.saveas(filename)

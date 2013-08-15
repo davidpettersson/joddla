@@ -23,26 +23,35 @@ class Point(object):
         self.name = name
         self.code = code
         self.coords = coords
-        self.x = coords[0]
-        self.y = coords[1]
-        self.z = self.elevation = coords[2]
+
+    def x(self):
+        return self.coords[0]
+
+    def y(self):
+        return self.coords[1]
+
+    def z(self):
+        return self.coords[2]
+
+    def elevation(self):
+        return self.coords[2]
 
     def __repr__(self):
-        return u'Point(%d,%s,%s,(%f,%f,%f))' % (self.ident, self.name, self.code, self.x, self.y, self.z)
+        return u'Point(%d,%s,%s,%s)' % (self.ident, self.name, self.code, str(self.coords))
 
 
 class BoundingBox(object):
     def __init__(self, points):
-        self.min_x = self.max_x = points[0].x
-        self.min_y = self.max_y = points[0].y
-        self.min_z = self.max_z = points[0].z
+        self.min_x = self.max_x = points[0].x()
+        self.min_y = self.max_y = points[0].y()
+        self.min_z = self.max_z = points[0].z()
         for point in points:
-            self.min_x = min(self.min_x, point.x)
-            self.min_y = min(self.min_y, point.y)
-            self.min_z = min(self.min_z, point.z)
-            self.max_x = max(self.max_x, point.x)
-            self.max_y = max(self.max_y, point.y)
-            self.max_z = max(self.max_z, point.z)
+            self.min_x = min(self.min_x, point.x())
+            self.min_y = min(self.min_y, point.y())
+            self.min_z = min(self.min_z, point.z())
+            self.max_x = max(self.max_x, point.x())
+            self.max_y = max(self.max_y, point.y())
+            self.max_z = max(self.max_z, point.z())
         self.width = self.max_x - self.min_x
         self.height = self.max_y - self.min_y
         self.depth = self.max_z - self.min_z
