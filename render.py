@@ -55,10 +55,10 @@ def draw_screen(points, tangents, problems, arcs, straights):
             if tangents[k]:
                 p = points[k]
                 l = tangents[k]
-                x0 = p.x - TANGENT_LENGTH / 2.0
-                y0 = l.k * (x0 - p.x) + p.y
-                x1 = p.x + TANGENT_LENGTH / 2.0
-                y1 = l.k * (x1 - p.x) + p.y
+                x0 = p.x() - TANGENT_LENGTH / 2.0
+                y0 = l.k * (x0 - p.x()) + p.y()
+                x1 = p.x() + TANGENT_LENGTH / 2.0
+                y1 = l.k * (x1 - p.x()) + p.y()
                 proc.line(x0, y0, x1, y1)
                 print x0, y1, x1, y1
     if RENDER_PROBLEMS:
@@ -82,10 +82,10 @@ def draw_screen(points, tangents, problems, arcs, straights):
         # straights
     proc.stroke(0, 0, 0, 255)
     for straight in straights:
-        proc.line(straight.a.x, straight.a.y, straight.b.x, straight.b.y)
+        proc.line(straight.a.x(), straight.a.y(), straight.b.x(), straight.b.y())
         # Points
     proc.fill(255, 0, 0)
     proc.stroke(0, 0, 0)
     for p in points:
-        proc.rect(p.x - BOX_WIDTH / 2.0, p.y - BOX_WIDTH / 2.0, BOX_WIDTH, BOX_WIDTH)
+        proc.rect(p.x() - BOX_WIDTH / 2.0, p.y() - BOX_WIDTH / 2.0, BOX_WIDTH, BOX_WIDTH)
     proc.run()

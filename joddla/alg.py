@@ -13,15 +13,12 @@
 # limitations under the License.
 
 
-from numpy import array
-
 from model import Slope, LineSegment, Problem
 
 
 def _calc_slope(p, q):
-    dy = (q.y - p.y)
-    dx = (q.x - p.x)
-    return Slope(array([dx, dy]))
+    d = q.coords - p.coords
+    return Slope(d)
 
 
 def find_slopes(points):
@@ -64,12 +61,7 @@ def find_line_segments(points):
 def formulate_problem(a, b, p, q):
     # Find midpoint
     deltas = b.coords - a.coords
-    print 'delta'
-    print a, a.coords
-    print b, b.coords
-    print deltas
     c = a.coords + deltas / 2.0
-    print c
 
     # Get perpendicular line
     c_k = -deltas[0] / deltas[1]

@@ -33,9 +33,9 @@ def solve(problem):
     best_y = 0.0
     best_radius = 0.0
 
-    step_size = 10
-    step_start = -100000.0
-    step_stop = 100000.0
+    step_size = 0.1
+    step_start = -10000.0
+    step_stop = 10000.0
     step_distance = step_stop - step_start
     step_count = step_distance / step_size
 
@@ -43,7 +43,7 @@ def solve(problem):
     print len(steps), 'steps'
     print 'first steps', steps[0:10]
 
-    horizontal = abs(problem.a.x - problem.b.x) > abs(problem.a.y - problem.b.y)
+    horizontal = abs(problem.a.x() - problem.b.x()) > abs(problem.a.y() - problem.b.y())
 
     for step in steps:
         if horizontal:
@@ -52,17 +52,17 @@ def solve(problem):
         else:
             y = problem.c[1] + step
             x = (y - problem.m) / problem.k
-        radius = distance(problem.a.x, problem.a.y, x, y)
+        radius = distance(problem.a.x(), problem.a.y(), x, y)
 
         # Calculate tangent for a
-        dx = (problem.a.x - x)
-        dy = (problem.a.y - y)
+        dx = (problem.a.x() - x)
+        dy = (problem.a.y() - y)
         a_k = -dx / dy
         error_a = a_k - problem.p.k
 
         # Calculate tangent for b
-        dx = (problem.b.x - x)
-        dy = (problem.b.y - y)
+        dx = (problem.b.x() - x)
+        dy = (problem.b.y() - y)
         b_k = -dx / dy
         error_b = b_k - problem.q.k
 
@@ -74,15 +74,15 @@ def solve(problem):
             best_y = y
             best_radius = radius
 
-    angle_a = acos((problem.a.x - best_x) / best_radius)
-    angle_b = acos((problem.b.x - best_x) / best_radius)
+    angle_a = acos((problem.a.x() - best_x) / best_radius)
+    angle_b = acos((problem.b.x() - best_x) / best_radius)
 
     switch = False
 
-    if best_y >= problem.a.y:
+    if best_y >= problem.a.y():
         angle_a = 2 * pi - angle_a
         switch = True
-    if best_y >= problem.b.y:
+    if best_y >= problem.b.y():
         angle_b = 2 * pi - angle_b
         switch = True
 

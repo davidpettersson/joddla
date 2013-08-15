@@ -48,13 +48,10 @@ def loads(s, center=False, scale=None):
     bbox = BoundingBox(points)
     if center:
         for point in points:
-            point.coords[0] = point.x = point.x - bbox.min_x + bbox.width
-            point.coords[1] = point.y = point.y - bbox.min_y + bbox.height
-            point.coords[2] = point.z = point.z - bbox.min_z + bbox.depth
+            point.coords[0] = point.x() - bbox.min_x + bbox.width
+            point.coords[1] = point.y() - bbox.min_y + bbox.height
+            point.coords[2] = point.z() - bbox.min_z + bbox.depth
     if scale:
         for point in points:
             point.coords *= scale
-            point.x *= scale
-            point.y *= scale
-            point.z *= scale
     return points
