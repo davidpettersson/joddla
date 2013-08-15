@@ -30,17 +30,17 @@ def dump(filename, points, line_segments, arcs):
             line.b.coords)
         l.set_dxf_attrib('layer', LAYER_GEOM)
     for arc in arcs:
-        if arc[6]:
-            a = layout.add_arc((arc[0], arc[1]), arc[2], degrees(arc[4]), degrees(arc[3]))
+        if arc[7]:
+            a = layout.add_arc((arc[0], arc[1], arc[2]), arc[3], degrees(arc[5]), degrees(arc[4]))
         else:
-            a = layout.add_arc((arc[0], arc[1]), arc[2], degrees(arc[3]), degrees(arc[4]))
+            a = layout.add_arc((arc[0], arc[1], arc[2]), arc[3], degrees(arc[4]), degrees(arc[5]))
         a.set_dxf_attrib('layer', LAYER_GEOM)
     for point in points:
         s = point.name
         if point.code:
             s += ' (%s)' % point.code
         text = layout.add_text(s)
-        text.set_pos((point.x(), point.y()), align='TOP_LEFT')
+        text.set_pos((point.x(), point.y(), point.z()), align='TOP_LEFT')
         text.set_dxf_attrib('height', 0.75)
         text.set_dxf_attrib('layer', LAYER_ANNO)
     dwg.saveas(filename)
