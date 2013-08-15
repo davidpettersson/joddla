@@ -70,20 +70,23 @@ def draw_screen(points, tangents, problems, arcs, straights):
             x1 = problem.c[0] + problem.s.x() * 5.0
             y1 = problem.c[0] + problem.s.y() * 5.0
             proc.line(x0, y0, x1, y1)
-        # arcs
+
+    # arcs
     proc.ellipseMode(proc.RADIUS)
     proc.noFill()
     for arc in arcs:
         if RENDER_CIRCLES:
             proc.stroke(127, 127, 127, 15)
-            proc.ellipse(arc[0], arc[1], arc[3], arc[3])
+            proc.ellipse(arc.c[0], arc.c[1], arc.r, arc.r)
         proc.stroke(255, 0, 0, 255)
-        proc.arc(arc[0], arc[1], arc[3], arc[3], arc[4], arc[5])
-        # straights
+        proc.arc(arc.c[0], arc.c[1], arc.r, arc.r, arc.alfa, arc.beta)
+
+    # straights
     proc.stroke(0, 0, 0, 255)
     for straight in straights:
         proc.line(straight.a.x(), straight.a.y(), straight.b.x(), straight.b.y())
-        # Points
+
+    # Points
     proc.fill(255, 0, 0)
     proc.stroke(0, 0, 0)
     for p in points:
