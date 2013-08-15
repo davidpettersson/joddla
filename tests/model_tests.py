@@ -28,10 +28,10 @@ class PointTest(TestCase):
         assert p.name == 'foo'
         assert p.code == 'bar'
         assert p.coords.all() == array([1, 2, 3]).all()
-        assert p.x == 1
-        assert p.y == 2
-        assert p.z == 3
-        assert p.elevation == 3
+        assert p.x() == 1
+        assert p.y() == 2
+        assert p.z() == 3
+        assert p.elevation() == 3
 
     def test_constructor_too_few_coords(self):
         with assert_raises(Exception):
@@ -69,20 +69,20 @@ class SlopeTest(TestCase):
     def test_diagonal(self):
         vector = array([1, 1])
         slope = Slope(vector)
-        assert_equal(1, slope.k)
-        assert_equal(1, slope.x)
-        assert_equal(1, slope.y)
+        assert_equal(1, slope.k())
+        assert_equal(1, slope.x())
+        assert_equal(1, slope.y())
 
     def test_horizontal(self):
         vector = array([1, 0])
         slope = Slope(vector)
-        assert_equal(0, slope.k)
-        assert_equal(1, slope.x)
-        assert_equal(0, slope.y)
+        assert_equal(0, slope.k())
+        assert_equal(1, slope.x())
+        assert_equal(0, slope.y())
 
     def test_vertical(self):
         vector = array([0, 1])
         slope = Slope(vector)
-        assert_equal(inf, slope.k)
-        assert_equal(0, slope.x)
-        assert_equal(1, slope.y)
+        assert_equal(inf, slope.k())
+        assert_equal(0, slope.x())
+        assert_equal(1, slope.y())

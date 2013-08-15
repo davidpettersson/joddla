@@ -52,9 +52,9 @@ def test__parse_point():
     assert_equal(point.ident, 235)
     assert_equal(point.name, '20')
     assert_equal(point.code, '')
-    assert_equal(point.x, 133608.61283017)
-    assert_equal(point.y, 6174287.7118201)
-    assert_equal(point.z, 30.943859706291)
+    assert_equal(point.x(), 133608.61283017)
+    assert_equal(point.y(), 6174287.7118201)
+    assert_equal(point.z(), 30.943859706291)
 
 
 def test__parse_code_single_word():

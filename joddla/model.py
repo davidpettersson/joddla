@@ -19,6 +19,7 @@ from numpy import array, inf
 class Point(object):
     def __init__(self, ident, name, code, coords):
         assert type(array([])) == type(coords)
+        assert len(coords) == 3
         self.ident = ident
         self.name = name
         self.code = code
@@ -63,12 +64,18 @@ class BoundingBox(object):
 class Slope(object):
     def __init__(self, vector):
         self.vector = vector
-        self.x = vector[0]
-        self.y = vector[1]
-        if vector[0] != 0:
-            self.k = vector[1] / vector[0]
+
+    def x(self):
+        return self.vector[0]
+
+    def y(self):
+        return self.vector[1]
+
+    def k(self):
+        if self.vector[0] != 0:
+            return self.vector[1] / self.vector[0]
         else:
-            self.k = inf
+            return inf
 
     def __repr__(self):
         return u'Slope(%f)' % self.k
