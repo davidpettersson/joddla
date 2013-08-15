@@ -13,6 +13,9 @@
 # limitations under the License.
 
 
+from numpy import inf
+
+
 class Point(object):
     def __init__(self, ident, name, code, coords):
         self.ident = ident
@@ -42,6 +45,17 @@ class BoundingBox(object):
         self.width = self.max_x - self.min_x
         self.height = self.max_y - self.min_y
         self.depth = self.max_z - self.min_z
+
+
+class Slope(object):
+    def __init__(self, vector):
+        self.vector = vector
+        self.x = vector[0]
+        self.y = vector[1]
+        if vector[0] != 0:
+            self.m = vector[1] / vector[0]
+        else:
+            self.m = inf
 
 
 ### TODO: Code below this line has not been revised yet
