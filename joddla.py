@@ -15,7 +15,9 @@
 from pprint import pprint
 from math import sqrt, acos, pi
 import sys
+from numpy import array
 from joddla.alg import find_slopes, find_line_segments, formulate_problems
+from joddla.model import ArcSegment
 from render import draw_screen
 from joddla.jobxml import load
 from joddla.dxf import dump
@@ -24,6 +26,17 @@ from joddla.dxf import dump
 def distance(x0, y0, x1, y1):
     return sqrt((y1 - y0) ** 2 + (x1 - x0) ** 2)
 
+def _quadrant_offset(p, x, y):
+    if p.x() >= x:
+        if p.y() >= y:
+            return 0, 1
+        else:
+            return 2.0 * pi, -1
+    else:
+        if p.y() >= y:
+            return pi, -1
+        else:
+            return pi, 1
 
 def solve(problem):
     print '----solving----'
@@ -33,7 +46,7 @@ def solve(problem):
     best_y = 0.0
     best_radius = 0.0
 
-    step_size = 0.1
+    step_size = 10
     step_start = -10000.0
     step_stop = 10000.0
     step_distance = step_stop - step_start
@@ -68,22 +81,23 @@ def solve(problem):
             best_y = y
             best_radius = radius
 
-    angle_a = acos((problem.a.x() - best_x) / best_radius)
-    angle_b = acos((problem.b.x() - best_x) / best_radius)
+    o, m = _quadrant_offset(problem.a, best_x, best_y)
+    angle_a = o + m * acos(abs(problem.a.x() - best_x) / best_radius)
+
+    o, m = _quadrant_offset(problem.b, best_x, best_y)
+    angle_b = o + m * acos(abs(problem.b.x() - best_x) / best_radius)
+
+    if angle_a > angle_b:
+        angle_a, angle_b = angle_b, angle_a
 
     dz = problem.b.z() - problem.a.z()
     best_z = problem.a.z() + dz / 2.0
 
-    switch = False
-
-    if best_y >= problem.a.y():
-        angle_a = 2 * pi - angle_a
-        switch = True
-    if best_y >= problem.b.y():
-        angle_b = 2 * pi - angle_b
-        switch = True
-
-    return best_x, best_y, best_z, best_radius, angle_a, angle_b, best_error, switch
+    return ArcSegment(
+        array([best_x, best_y, best_z]),
+        best_radius,
+        angle_a,
+        angle_b)
 
 
 def main(filename, render):

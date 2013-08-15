@@ -30,12 +30,11 @@ def dump(filename, points, line_segments, arcs):
             line.b.coords)
         l.set_dxf_attrib('layer', LAYER_GEOM)
     for arc in arcs:
-        if arc[7]:
-            a = layout.add_arc((arc[0], arc[1], arc[2]), arc[3], degrees(arc[5]), degrees(arc[4]))
-        else:
-            a = layout.add_arc((arc[0], arc[1], arc[2]), arc[3], degrees(arc[4]), degrees(arc[5]))
+        a = layout.add_arc(arc.c, arc.r, degrees(arc.alfa), degrees(arc.beta))
         a.set_dxf_attrib('layer', LAYER_GEOM)
     for point in points:
+        #v = layout.add_point(point.coords)
+        #v.set_dxf_attrib('layer', LAYER_GEOM)
         s = point.name
         if point.code:
             s += ' (%s)' % point.code
