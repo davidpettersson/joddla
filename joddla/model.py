@@ -46,6 +46,9 @@ class BoundingBox(object):
         self.height = self.max_y - self.min_y
         self.depth = self.max_z - self.min_z
 
+    def __repr__(self):
+        return u'BBox(%f,%f,%f,%f)' % (self.min_x, self.min_y, self.max_x, self.max_y)
+
 
 class Slope(object):
     def __init__(self, vector):
@@ -53,9 +56,32 @@ class Slope(object):
         self.x = vector[0]
         self.y = vector[1]
         if vector[0] != 0:
-            self.m = vector[1] / vector[0]
+            self.k = vector[1] / vector[0]
         else:
-            self.m = inf
+            self.k = inf
+
+    def __repr__(self):
+        return u'Slope(%f)' % self.k
+
+
+class LineSegment(object):
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def __repr__(self):
+        return u'LineSegment(%s,%s)' % (self.a, self.b)
+
+
+class ArcSegment(object):
+    def __init__(self, center, radius, start_angle, stop_angle):
+        self.c = center
+        self.r = radius
+        self.alfa = start_angle
+        self.beta = stop_angle
+
+    def __repr__(self):
+        return u'ArcSegment(%s,%s,%f,%f)' % (self.c, self.r, self.alfa, self.beta)
 
 
 ### TODO: Code below this line has not been revised yet

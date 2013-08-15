@@ -15,23 +15,15 @@
 from pprint import pprint
 from math import sqrt, acos, pi
 import sys
-
+from joddla.alg import find_slopes, find_line_segments
 from render import draw_screen
-from joddla.model import Line, Problem
+from joddla.model import Problem
 from joddla.jobxml import load
 from joddla.dxf import dump
 
 
 def distance(x0, y0, x1, y1):
     return sqrt((y1 - y0) ** 2 + (x1 - x0) ** 2)
-
-
-def tangent_from_points(p, q, r):
-    dy = (q.y - r.y)
-    dx = (q.x - r.x)
-    k = dy / dx
-    m = p.y - k * p.x
-    return Line(k, m)
 
 
 def formulate_problem(a, b, p, q):
@@ -55,9 +47,9 @@ def solve(problem):
     best_y = 0.0
     best_radius = 0.0
 
-    step_size = 0.1
-    step_start = -10000.0
-    step_stop = 10000.0
+    step_size = 10
+    step_start = -100000.0
+    step_stop = 100000.0
     step_distance = step_stop - step_start
     step_count = step_distance / step_size
 
@@ -118,54 +110,32 @@ def main(filename, render):
     else:
         center = False
         scale = None
+
+    print '--- POINTS'
     points = load(filename, center, scale)
     pprint(points)
-    tangents = []
-    active = False
-    # find tangents
-    for k in range(len(points)):
-        point = points[k]
-        if point.code == 'C1':
-            tangent = tangent_from_points(point, point, points[k - 1])
-            active = True
-        elif point.code == 'C2':
-            tangent = tangent_from_points(point, points[k + 1], point)
-            active = False
-        else:
-            if active:
-                tangent = tangent_from_points(point, points[k + 1], points[k - 1])
-            else:
-                tangent = None
-        tangents.append(tangent)
-    pprint(tangents)
-    lines = []
-    active = False
-    for k in range(1, len(points)):
-        if active:
-            pass
-        else:
-            lines.append((points[k - 1].x, points[k - 1].y, points[k].x, points[k].y))
 
-        if points[k].code == 'C1':
-            active = True
-        elif points[k].code == 'C2':
-            active = False
-        else:
-            pass
-    pprint(lines)
+    print '--- SLOPES'
+    slopes = find_slopes(points)
+    pprint(slopes)
+
+    print '--- LINE SEGMENTS'
+    line_segments = find_line_segments(points)
+    pprint(line_segments)
+
     # get problems that need to be solved
     problems = []
     for k in range(len(points) - 1):
-        if tangents[k] and tangents[k + 1] and points[k].code != 'C2' and points[k + 1] != 'C1':
+        if slopes[k] and slopes[k + 1] and points[k].code != 'C2' and points[k + 1] != 'C1':
             problems.append(formulate_problem(points[k], points[k + 1],
-                                              tangents[k], tangents[k + 1]))
+                                              slopes[k], slopes[k + 1]))
     pprint(problems)
     circles = map(solve, problems)
     pprint(circles)
     if render:
-        draw_screen(points, tangents, problems, circles, lines)
+        draw_screen(points, slopes, problems, circles, line_segments)
     else:
-        dump(filename + '.dxf', points, lines, circles)
+        dump(filename + '.dxf', points, line_segments, circles)
 
 
 if __name__ == '__main__':

@@ -69,20 +69,20 @@ class SlopeTest(TestCase):
     def test_diagonal(self):
         vector = array([1, 1])
         slope = Slope(vector)
-        assert_equal(1, slope.m)
+        assert_equal(1, slope.k)
         assert_equal(1, slope.x)
         assert_equal(1, slope.y)
 
     def test_horizontal(self):
         vector = array([1, 0])
         slope = Slope(vector)
-        assert_equal(0, slope.m)
+        assert_equal(0, slope.k)
         assert_equal(1, slope.x)
         assert_equal(0, slope.y)
 
     def test_vertical(self):
         vector = array([0, 1])
         slope = Slope(vector)
-        assert_equal(inf, slope.m)
+        assert_equal(inf, slope.k)
         assert_equal(0, slope.x)
         assert_equal(1, slope.y)
