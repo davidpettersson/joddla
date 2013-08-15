@@ -15,28 +15,14 @@
 from pprint import pprint
 from math import sqrt, acos, pi
 import sys
-from joddla.alg import find_slopes, find_line_segments
+from joddla.alg import find_slopes, find_line_segments, formulate_problems
 from render import draw_screen
-from joddla.model import Problem
 from joddla.jobxml import load
 from joddla.dxf import dump
 
 
 def distance(x0, y0, x1, y1):
     return sqrt((y1 - y0) ** 2 + (x1 - x0) ** 2)
-
-
-def formulate_problem(a, b, p, q):
-    # Find midpoint
-    dx = (b.x - a.x)
-    dy = (b.y - a.y)
-    c_x = a.x + dx / 2.0
-    c_y = a.y + dy / 2.0
-
-    # Get perpendicular line
-    c_k = -dx / dy
-    c_m = c_y - c_k * c_x
-    return Problem(c_x, c_y, c_k, c_m, a, b, p, q)
 
 
 def solve(problem):
@@ -61,10 +47,10 @@ def solve(problem):
 
     for step in steps:
         if horizontal:
-            x = problem.x + step
+            x = problem.c[0] + step
             y = problem.k * x + problem.m
         else:
-            y = problem.y + step
+            y = problem.c[1] + step
             x = (y - problem.m) / problem.k
         radius = distance(problem.a.x, problem.a.y, x, y)
 
@@ -124,14 +110,12 @@ def main(filename, render):
     pprint(line_segments)
 
     # get problems that need to be solved
-    problems = []
-    for k in range(len(points) - 1):
-        if slopes[k] and slopes[k + 1] and points[k].code != 'C2' and points[k + 1] != 'C1':
-            problems.append(formulate_problem(points[k], points[k + 1],
-                                              slopes[k], slopes[k + 1]))
+    print '--- PROBLEMS'
+    problems = formulate_problems(points, slopes)
     pprint(problems)
     circles = map(solve, problems)
     pprint(circles)
+
     if render:
         draw_screen(points, slopes, problems, circles, line_segments)
     else:

@@ -13,11 +13,12 @@
 # limitations under the License.
 
 
-from numpy import inf
+from numpy import array, inf
 
 
 class Point(object):
     def __init__(self, ident, name, code, coords):
+        assert type(array([])) == type(coords)
         self.ident = ident
         self.name = name
         self.code = code
@@ -84,6 +85,20 @@ class ArcSegment(object):
         return u'ArcSegment(%s,%s,%f,%f)' % (self.c, self.r, self.alfa, self.beta)
 
 
+class Problem():
+    def __init__(self, c, k, m, a, b, p, q):
+        self.c = c
+        self.k = k
+        self.m = m
+        self.a = a
+        self.b = b
+        self.p = p
+        self.q = q
+
+    def __repr__(self):
+        return u'Problem(%s,%f,%f,%s,%s,%s,%s)' % (self.c, self.k, self.m, self.a, self.b, self.p, self.q)
+
+
 ### TODO: Code below this line has not been revised yet
 
 
@@ -96,16 +111,3 @@ class Line():
         return u'Line(%f,%f)' % (self.k, self.m)
 
 
-class Problem():
-    def __init__(self, x, y, k, m, a, b, p, q):
-        self.x = x
-        self.y = y
-        self.k = k
-        self.m = m
-        self.a = a
-        self.b = b
-        self.p = p
-        self.q = q
-
-    def __repr__(self):
-        return u'Problem(%f,%f,%f,%f,%s,%s,%s,%s)' % (self.x, self.y, self.k, self.m, self.a, self.b, self.p, self.q)
