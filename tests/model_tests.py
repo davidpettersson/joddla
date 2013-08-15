@@ -16,9 +16,9 @@
 from unittest import TestCase
 
 from nose.tools import assert_equal, assert_raises
-from numpy import array
+from numpy import array, inf
 
-from joddla.model import Point, BoundingBox
+from joddla.model import Point, BoundingBox, Slope
 
 
 class PointTest(TestCase):
@@ -63,3 +63,26 @@ class BoundingBoxTest(TestCase):
         assert_equal(bb.max_x, 1)
         assert_equal(bb.max_y, 2)
         assert_equal(bb.max_z, 3)
+
+
+class SlopeTest(TestCase):
+    def test_diagonal(self):
+        vector = array([1, 1])
+        slope = Slope(vector)
+        assert_equal(1, slope.m)
+        assert_equal(1, slope.x)
+        assert_equal(1, slope.y)
+
+    def test_horizontal(self):
+        vector = array([1, 0])
+        slope = Slope(vector)
+        assert_equal(0, slope.m)
+        assert_equal(1, slope.x)
+        assert_equal(0, slope.y)
+
+    def test_vertical(self):
+        vector = array([0, 1])
+        slope = Slope(vector)
+        assert_equal(inf, slope.m)
+        assert_equal(0, slope.x)
+        assert_equal(1, slope.y)
