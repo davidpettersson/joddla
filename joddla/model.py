@@ -102,17 +102,24 @@ class ArcSegment(object):
 
 
 class Problem():
-    def __init__(self, c, k, m, a, b, p, q):
-        self.c = c
-        self.k = k
-        self.m = m
+    def __init__(self, center, slope, a, b, p, q):
+        self.c = center
+        self.s = slope
         self.a = a
         self.b = b
         self.p = p
         self.q = q
 
     def __repr__(self):
-        return u'Problem(%s,%f,%f,%s,%s,%s,%s)' % (self.c, self.k, self.m, self.a, self.b, self.p, self.q)
+        return u'''{
+  Problem:
+     First point = %s,
+         & slope = %s,
+    Second point = %s,
+         & slope = %s,
+    Center point = %s,
+         & slope = %s
+}''' % (self.a.coords, self.p, self.b.coords, self.q, self.c, self.s)
 
 
 ### TODO: Code below this line has not been revised yet

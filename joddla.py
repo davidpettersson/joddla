@@ -33,7 +33,7 @@ def solve(problem):
     best_y = 0.0
     best_radius = 0.0
 
-    step_size = 0.1
+    step_size = 1
     step_start = -10000.0
     step_stop = 10000.0
     step_distance = step_stop - step_start
@@ -43,15 +43,9 @@ def solve(problem):
     print len(steps), 'steps'
     print 'first steps', steps[0:10]
 
-    horizontal = abs(problem.a.x() - problem.b.x()) > abs(problem.a.y() - problem.b.y())
-
     for step in steps:
-        if horizontal:
-            x = problem.c[0] + step
-            y = problem.k * x + problem.m
-        else:
-            y = problem.c[1] + step
-            x = (y - problem.m) / problem.k
+        x = problem.c[0] + problem.s.x() * step
+        y = problem.c[1] + problem.s.y() * step
         radius = distance(problem.a.x(), problem.a.y(), x, y)
 
         # Calculate tangent for a
