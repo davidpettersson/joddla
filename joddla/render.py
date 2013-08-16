@@ -74,7 +74,6 @@ def draw_screen(points, slopes, line_segments, arc_segments):
                 x1 = p.x() + s[0] * SLOPE_LENGTH
                 y1 = p.y() + s[1] * SLOPE_LENGTH
                 proc.line(x0, y0, x1, y1)
-                print x0, y1, x1, y1
 
     # line_segments
     proc.stroke(0, 0, 0, 255)
