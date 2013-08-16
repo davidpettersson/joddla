@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from pprint import pprint
 from math import sqrt, acos, pi
 import sys
@@ -26,6 +27,7 @@ from joddla.dxf import dump
 def distance(x0, y0, x1, y1):
     return sqrt((y1 - y0) ** 2 + (x1 - x0) ** 2)
 
+
 def _quadrant_offset(p, x, y):
     if p.x() >= x:
         if p.y() >= y:
@@ -37,6 +39,7 @@ def _quadrant_offset(p, x, y):
             return pi, -1
         else:
             return pi, 1
+
 
 def solve(problem):
     print '----solving----'
@@ -124,13 +127,15 @@ def main(filename, render):
     print '--- PROBLEMS'
     problems = formulate_problems(points, slopes)
     pprint(problems)
-    circles = map(solve, problems)
-    pprint(circles)
+
+    print '--- SOLUTIONS'
+    arc_segments = map(solve, problems)
+    pprint(arc_segments)
 
     if render:
-        draw_screen(points, slopes, problems, circles, line_segments)
+        draw_screen(points, slopes, line_segments, arc_segments)
     else:
-        dump(filename + '.dxf', points, line_segments, circles)
+        dump(filename + '.dxf', points, line_segments, arc_segments)
 
 
 if __name__ == '__main__':

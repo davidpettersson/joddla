@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from math import degrees
-
 import ezdxf
 
 
@@ -21,7 +20,7 @@ LAYER_GEOM = 'Geometries'
 LAYER_ANNO = 'Annotations'
 
 
-def dump(filename, points, line_segments, arcs):
+def dump(filename, points, line_segments, arc_segments):
     dwg = ezdxf.new(dxfversion='AC1024')  # AutoCAD 2010
     layout = dwg.modelspace()
     for line in line_segments:
@@ -29,12 +28,12 @@ def dump(filename, points, line_segments, arcs):
             line.a.coords,
             line.b.coords)
         l.set_dxf_attrib('layer', LAYER_GEOM)
-    for arc in arcs:
+    for arc in arc_segments:
         a = layout.add_arc(arc.c, arc.r, degrees(arc.alfa), degrees(arc.beta))
         a.set_dxf_attrib('layer', LAYER_GEOM)
     for point in points:
-        #v = layout.add_point(point.coords)
-        #v.set_dxf_attrib('layer', LAYER_GEOM)
+        # v = layout.add_point(point.coords)
+        # v.set_dxf_attrib('layer', LAYER_GEOM)
         s = point.name
         if point.code:
             s += ' (%s)' % point.code
