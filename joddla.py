@@ -18,13 +18,17 @@ from math import sqrt, acos, pi
 import sys
 from numpy import array
 from joddla.alg import find_slopes, find_line_segments, formulate_problems
-from joddla.model import ArcSegment
+from joddla.model import ArcSegment, LineSegment
 from joddla.render import draw_screen
 from joddla.jobxml import load
 from joddla.dxf import dump
 
 
-def distance(x0, y0, x1, y1):
+# TODO: Need to decide suitable threshold
+LINE_SNAP_THRESHOLD = 0.95
+
+
+def _distance(x0, y0, x1, y1):
     return sqrt((y1 - y0) ** 2 + (x1 - x0) ** 2)
 
 
@@ -44,25 +48,31 @@ def _quadrant_offset(p, x, y):
 def solve(problem):
     print '----solving----'
 
+    d = _distance(problem.a.x(), problem.a.y(), problem.b.x(), problem.b.y())
+    print 'Distance between points:', d
+
+    # TODO: Lots of magic constants
+    step_size = d / 1000
+    step_extension = d * 100
+    step_start = -step_extension
+    step_stop = step_extension
+    step_distance = step_stop - step_start
+    step_count = step_distance / step_size
+    steps = [(step_start + step_size * k) for k in range(int(step_count))]
+
+    # TODO: This is an extremely naive numerical search. Replace with an
+    #   analytical solution (probably some derivative stuff).
+
     best_error = 100000000
     best_x = 0.0
     best_y = 0.0
     best_radius = 0.0
-
-    step_size = 10
-    step_start = -10000.0
-    step_stop = 10000.0
-    step_distance = step_stop - step_start
-    step_count = step_distance / step_size
-
-    steps = [(step_start + step_size * k) for k in range(int(step_count))]
-    print len(steps), 'steps'
-    print 'first steps', steps[0:10]
+    improvements = 0
 
     for step in steps:
         x = problem.c[0] + problem.s.x() * step
         y = problem.c[1] + problem.s.y() * step
-        radius = distance(problem.a.x(), problem.a.y(), x, y)
+        radius = _distance(problem.a.x(), problem.a.y(), x, y)
 
         # Calculate tangent for a
         dx = (problem.a.x() - x)
@@ -76,13 +86,25 @@ def solve(problem):
         b_k = -dx / dy
         error_b = b_k - problem.q.k()
 
+        # Figure out the error
         error = sqrt(error_a ** 2 + error_b ** 2)
 
+        # Pick the lowest error
         if error < best_error:
             best_error = error
             best_x = x
             best_y = y
             best_radius = radius
+            improvements += 1
+
+    print 'Step:', step_size
+    print 'Improvements:', improvements
+    print 'Error:', best_error
+    print 'Radius:', best_radius
+    print 'Extension', step_extension
+
+    if (best_radius / step_extension) > LINE_SNAP_THRESHOLD:
+        return LineSegment(problem.a, problem.b)
 
     o, m = _quadrant_offset(problem.a, best_x, best_y)
     angle_a = o + m * acos(abs(problem.a.x() - best_x) / best_radius)
@@ -123,14 +145,16 @@ def main(filename, render):
     line_segments = find_line_segments(points)
     pprint(line_segments)
 
-    # get problems that need to be solved
     print '--- PROBLEMS'
     problems = formulate_problems(points, slopes)
     pprint(problems)
 
     print '--- SOLUTIONS'
-    arc_segments = map(solve, problems)
-    pprint(arc_segments)
+    solutions = map(solve, problems)
+    pprint(solutions)
+
+    arc_segments = filter(lambda s: isinstance(s, ArcSegment), solutions)
+    line_segments.extend(filter(lambda s: isinstance(s, LineSegment), solutions))
 
     if render:
         draw_screen(points, slopes, line_segments, arc_segments)

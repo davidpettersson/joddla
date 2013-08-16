@@ -20,8 +20,8 @@ from numpy.linalg import norm
 from joddla.model import BoundingBox
 
 
-VIEW_WIDTH = 1000
-VIEW_HEIGHT = 500
+VIEW_WIDTH = 1024
+VIEW_HEIGHT = 640
 
 RENDER_SLOPES = False
 RENDER_CIRCLES = False
@@ -43,7 +43,7 @@ def draw_screen(points, slopes, line_segments, arc_segments):
     bbox = BoundingBox(points)
     eye_x = bbox.min_x + bbox.width / 2.0
     eye_y = bbox.min_y + bbox.height / 2.0
-    eye_z = (1.1 * max(bbox.width, bbox.height) / 2.0) / sin(radians(50))
+    eye_z = (1.5 * max(bbox.width, bbox.height) / 2.0) / sin(radians(50))
     center_x = bbox.min_x + bbox.width / 2.0
     center_y = bbox.min_y + bbox.height / 2.0
     proc.camera(
