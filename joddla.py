@@ -19,7 +19,7 @@ import sys
 from numpy import array
 from joddla.alg import find_slopes, find_line_segments, formulate_problems
 from joddla.model import ArcSegment
-from render import draw_screen
+from joddla.render import draw_screen
 from joddla.jobxml import load
 from joddla.dxf import dump
 
