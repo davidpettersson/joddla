@@ -13,13 +13,14 @@
 # limitations under the License.
 
 
+from sys import argv, exit
 from pprint import pprint
-import sys
 from joddla.alg import find_slopes, find_line_segments, formulate_problems, solve_problem
 from joddla.model import ArcSegment, LineSegment
 from joddla.render import draw_screen
 from joddla.jobxml import load
 from joddla.dxf import dump
+from multiprocessing import Pool
 
 
 def main(filename, render):
@@ -46,8 +47,11 @@ def main(filename, render):
     problems = formulate_problems(points, slopes)
     pprint(problems)
 
+    print '--- SOLVING'
+    pool = Pool()
+    solutions = pool.map(solve_problem, problems)
+
     print '--- SOLUTIONS'
-    solutions = map(solve_problem, problems)
     pprint(solutions)
 
     arc_segments = filter(lambda s: isinstance(s, ArcSegment), solutions)
@@ -60,18 +64,4 @@ def main(filename, render):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print 'usage: joddla COMMAND FILE'
-        sys.exit(1)
-
-    filename = sys.argv[2]
-
-    if sys.argv[1] == 'export':
-        export = True
-    elif sys.argv[1] == 'render':
-        export = False
-    else:
-        print 'Command must be either export or render'
-        sys.exit(1)
-
-    main(filename, not export)
+    main(argv[1], False)
