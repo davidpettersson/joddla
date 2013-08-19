@@ -14,10 +14,9 @@
 
 
 from math import sqrt, acos, pi
-
 from numpy import array
-
 from numpy.linalg import norm
+from logging import debug
 
 from model import Slope, LineSegment, Problem, ArcSegment
 
@@ -106,11 +105,10 @@ def _quadrant_offset(p, x, y):
             return pi, 1
 
 
-def solve_problem(problem):
-    print '--- SOLVING'
+def solve_problem(problem, cb=None):
 
     d = _distance(problem.a.x(), problem.a.y(), problem.b.x(), problem.b.y())
-    print 'Distance between points:', d
+    debug('Distance between points: %f' % (d, ))
 
     # TODO: Lots of magic constants
     step_size = d / 1000
@@ -158,14 +156,17 @@ def solve_problem(problem):
             best_radius = radius
             improvements += 1
 
-    print 'Step:', step_size
-    print 'Improvements:', improvements
-    print 'Error:', best_error
-    print 'Radius:', best_radius
-    print 'Extension', step_extension
+    debug('Step: %f' % (step_size, ))
+    debug('Improvements: %f' % (improvements, ))
+    debug('Error: %f' % (best_error, ))
+    debug('Radius: %f' % (best_radius, ))
+    debug('Extension: %f' % (step_extension, ))
 
     if (best_radius / step_extension) > LINE_SNAP_THRESHOLD:
-        return LineSegment(problem.a, problem.b)
+        l_s = LineSegment(problem.a, problem.b)
+        if cb:
+            cb(l_s)
+        return l_s
 
     o, m = _quadrant_offset(problem.a, best_x, best_y)
     angle_a = o + m * acos(abs(problem.a.x() - best_x) / best_radius)
@@ -179,8 +180,11 @@ def solve_problem(problem):
     dz = problem.b.z() - problem.a.z()
     best_z = problem.a.z() + dz / 2.0
 
-    return ArcSegment(
+    a_s = ArcSegment(
         array([best_x, best_y, best_z]),
         best_radius,
         angle_a,
         angle_b)
+    if cb:
+        cb(a_s)
+    return a_s
