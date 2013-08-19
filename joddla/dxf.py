@@ -16,7 +16,8 @@ from math import degrees
 import ezdxf
 
 
-LAYER_GEOM = 'Geometries'
+LAYER_POINTS = 'Points'
+LAYER_LINES_AND_CURVES = 'Lines and Curves'
 LAYER_ANNO = 'Annotations'
 
 
@@ -27,13 +28,13 @@ def dump(filename, points, line_segments, arc_segments):
         l = layout.add_line(
             line.a.coords,
             line.b.coords)
-        l.set_dxf_attrib('layer', LAYER_GEOM)
+        l.set_dxf_attrib('layer', LAYER_LINES_AND_CURVES)
     for arc in arc_segments:
         a = layout.add_arc(arc.c, arc.r, degrees(arc.alfa), degrees(arc.beta))
-        a.set_dxf_attrib('layer', LAYER_GEOM)
+        a.set_dxf_attrib('layer', LAYER_LINES_AND_CURVES)
     for point in points:
-        # v = layout.add_point(point.coords)
-        # v.set_dxf_attrib('layer', LAYER_GEOM)
+        v = layout.add_point(point.coords)
+        v.set_dxf_attrib('layer', LAYER_POINTS)
         s = point.name
         if point.code:
             s += ' (%s)' % point.code
