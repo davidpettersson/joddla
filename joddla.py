@@ -13,17 +13,27 @@
 # limitations under the License.
 
 
-from sys import argv, exit
-from pprint import pprint
+from sys import argv, stdout
+from logging import info, basicConfig, WARN, debug
+from multiprocessing import Pool
+from time import sleep
+
 from joddla.alg import find_slopes, find_line_segments, formulate_problems, solve_problem
 from joddla.model import ArcSegment, LineSegment
 from joddla.render import draw_screen
 from joddla.jobxml import load
 from joddla.dxf import dump
-from multiprocessing import Pool
+
+
+def spinner(k):
+    SPINNER = '-\\|/'
+    s = '\b%s' % (SPINNER[k % len(SPINNER)])
+    stdout.write(s)
 
 
 def main(filename, render):
+    basicConfig(level=WARN)
+
     if render:
         center = True
         scale = 100.0
@@ -31,28 +41,30 @@ def main(filename, render):
         center = False
         scale = None
 
-    print '--- POINTS'
     points = load(filename, center, scale)
-    pprint(points)
+    print 'Loaded %d points from %s' % (len(points), filename)
 
-    print '--- SLOPES'
     slopes = find_slopes(points)
-    pprint(slopes)
+    print 'Calculated %d slopes' % (len(slopes), )
 
-    print '--- LINE SEGMENTS'
     line_segments = find_line_segments(points)
-    pprint(line_segments)
+    print 'Found %d line segments' % (len(line_segments), )
 
-    print '--- PROBLEMS'
     problems = formulate_problems(points, slopes)
-    pprint(problems)
+    print 'Formulated %d problems' % (len(problems), )
 
-    print '--- SOLVING'
     pool = Pool()
-    solutions = pool.map(solve_problem, problems)
+    print 'Calculating solutions...  ',
+    token = pool.map_async(solve_problem, problems)
 
-    print '--- SOLUTIONS'
-    pprint(solutions)
+    k = 0
+    while not token.ready():
+        sleep(1.0)
+        spinner(k)
+        k += 1
+
+    solutions = token.get()
+    print '\bdone'
 
     arc_segments = filter(lambda s: isinstance(s, ArcSegment), solutions)
     line_segments.extend(filter(lambda s: isinstance(s, LineSegment), solutions))
@@ -61,6 +73,9 @@ def main(filename, render):
         draw_screen(points, slopes, line_segments, arc_segments)
     else:
         dump(filename + '.dxf', points, line_segments, arc_segments)
+        print 'Solution consists of %d lines and %d arcs' % (len(line_segments), len(arc_segments))
+        print 'Results written to %s' % (filename + '.dxf', )
+        raw_input('Press enter to exit...')
 
 
 if __name__ == '__main__':
