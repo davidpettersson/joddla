@@ -14,9 +14,7 @@
 
 
 from sys import argv, stdout
-from logging import info, basicConfig, WARN, debug
-from multiprocessing import Pool
-from time import sleep
+from logging import basicConfig, WARN
 
 from joddla.alg import find_slopes, find_line_segments, formulate_problems, solve_problem
 from joddla.model import ArcSegment, LineSegment
@@ -53,18 +51,18 @@ def main(filename, render):
     problems = formulate_problems(points, slopes)
     print 'Formulated %d problems' % (len(problems), )
 
-    pool = Pool()
-    print 'Calculating solutions...  ',
-    token = pool.map_async(solve_problem, problems)
+    print 'Calculating solutions...'
 
-    k = 0
-    while not token.ready():
-        sleep(1.0)
-        spinner(k)
-        k += 1
-
-    solutions = token.get()
-    print '\bdone'
+    solutions = []
+    for problem in problems:
+        msg = '  Path (%.2f, %.2f), (%.2f, %.2f) ...' % (problem.a.x(), problem.a.y(), problem.b.x(), problem.b.y())
+        print msg,
+        solution = solve_problem(problem)
+        if type(solution) == ArcSegment:
+            print ' -> arc'
+        else:
+            print ' -> line'
+        solutions.append(solution)
 
     arc_segments = filter(lambda s: isinstance(s, ArcSegment), solutions)
     line_segments.extend(filter(lambda s: isinstance(s, LineSegment), solutions))
@@ -73,10 +71,13 @@ def main(filename, render):
         draw_screen(points, slopes, line_segments, arc_segments)
     else:
         dump(filename + '.dxf', points, line_segments, arc_segments)
-        print 'Solution consists of %d lines and %d arcs' % (len(line_segments), len(arc_segments))
+        print 'Total geometry consists of %d lines and %d arcs' % (len(line_segments), len(arc_segments))
         print 'Results written to %s' % (filename + '.dxf', )
-        raw_input('Press enter to exit...')
 
 
 if __name__ == '__main__':
-    main(argv[1], False)
+    if len(argv) < 2:
+        print 'This program requires a file to run. Drag-n-drop one on the icon.'
+    else:
+        main(argv[1], False)
+    raw_input('Press enter to exit...')
