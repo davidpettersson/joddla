@@ -30,4 +30,4 @@ setup(console=['joddla.py'],
           }
       },
       data_files=data_files,
-      requires=['nose', 'numpy', 'ezdxf', 'pyprocessing', 'PySide'])
+      requires=['nose', 'numpy', 'ezdxf', 'pyprocessing'])
