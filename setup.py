@@ -13,5 +13,21 @@
 # limitations under the License.
 
 from distutils.core import setup
+from distutils.sysconfig import get_python_lib
+from os.path import join
 
-setup(console=['joddla.py'], requires=['nose', 'numpy', 'ezdxf', 'pyprocessing'])
+import py2exe
+
+data_files = [
+    ('ezdxf\\templates', [join(get_python_lib(), 'ezdxf\\templates\\AC1024.dxf')])
+]
+
+setup(console=['joddla.py'],
+      options={
+          'py2exe': {
+              'optimize': 2,
+              'skip_archive': True
+          }
+      },
+      data_files=data_files,
+      requires=['nose', 'numpy', 'ezdxf', 'pyprocessing', 'PySide'])
