@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Joddla"
-#define MyAppVersion "0.2"
+#define MyAppVersion "0.2.1"
 #define MyAppPublisher "Stadsbyggnadskontoret, Lunds kommun"
 #define MyAppURL "http://bitbucket.org/sbklund/joddla"
 #define MyAppExeName "joddla.exe"
@@ -19,9 +19,9 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\Joddla 0.2
+DefaultDirName={pf}\{#MyAppName} {#MyAppVersion}
 DisableDirPage=yes
-DefaultGroupName=Joddla 0.2
+DefaultGroupName={#MyAppName} {#MyAppVersion}
 DisableProgramGroupPage=yes
 OutputBaseFilename=setup
 Compression=lzma
@@ -39,8 +39,8 @@ Source: "dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\joddla.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\joddla.ico"
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon; IconFilename: "{app}\joddla.ico"
 

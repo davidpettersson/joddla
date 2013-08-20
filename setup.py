@@ -19,15 +19,24 @@ from os.path import join
 import py2exe
 
 data_files = [
-    ('ezdxf\\templates', [join(get_python_lib(), 'ezdxf\\templates\\AC1024.dxf')])
+    ('ezdxf\\templates', [join(get_python_lib(), 'ezdxf\\templates\\AC1024.dxf')]),
+    ('.', ['joddla.ico']),
 ]
 
-setup(console=['joddla.py'],
-      options={
-          'py2exe': {
-              'optimize': 2,
-              'skip_archive': True
-          }
-      },
-      data_files=data_files,
-      requires=['nose', 'numpy', 'ezdxf', 'pyprocessing'])
+setup(
+    console=[
+        {
+            'script': 'joddla.py',
+            'icon_resources': [(1, 'joddla.ico')]
+        }
+    ],
+    options={
+        'py2exe': {
+            'optimize': 2,
+            'skip_archive': True
+        }
+    },
+    data_files=data_files,
+    requires=[
+        'nose', 'numpy', 'ezdxf', 'pyprocessing'
+    ])
