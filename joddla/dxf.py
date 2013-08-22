@@ -35,6 +35,7 @@ def dump(filename, points, line_segments, arc_segments):
     for point in points:
         v = layout.add_point(point.coords)
         v.set_dxf_attrib('layer', LAYER_POINTS)
+        v.set_dxf_attrib('thickness', 10)
         s = point.name
         if point.code:
             s += ' (%s)' % point.code
