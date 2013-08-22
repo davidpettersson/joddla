@@ -1,0 +1,17 @@
+Algorithm (in Swedish)
+----------------------
+
+* Finn tangenter för alla punkter [C1..C2]
+* För varje par av punkter (a, b) inom en sekvens av [C1..C2]:
+    * Skapa en mittpunkt c
+    * Dra ut en linje vinkelrät mot linjen mellan (a, b) som skär c
+    * Spara (a, b), deras respektive tangenter, c och linjens ekvation åt sidan som ett problem
+* För varje problem:
+    * För ett diskret antal punkter på linjen:
+        * Räkna ut en cirkel med mittpunkt på linjen som skär (a, b)
+        * Räkna ut cirkelns tangenter i punkter (a, b)
+        * Beräkna avvikelse mellan den egna och cirkelns tangent för a och b
+        * Om den beräknade cirkeln har mindre avvikelse än vad vi tidigare sett, behåll den som bästa lösning för problemet
+* För varje cirkel:
+    * Räkna ut en båge
+
