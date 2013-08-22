@@ -8,7 +8,7 @@ Joddla is a desktop software tool that converts Trimble JobXML files containing 
 data points to line and arc segments in a DXF file. It is a replacement and improvement
 over the DXF export stylesheet available for the Trimble field computer.
 
-![Example Fitting](joddla-fitting.png)
+![Example Fitting](https://bitbucket.org/sbklund/joddla/raw/040c751ecbe91067436084b7bb031a29f9fc28f0/joddla-fitting.png)
 
 The above picture shows an example of how a polyline curve has been fitted with arc segments.
 
