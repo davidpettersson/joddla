@@ -1,48 +1,42 @@
 Joddla - JobXML to DXF Converter
 ================================
 
-Authored by David Pettersson.
-
-Contributions from Britta Duve Hansen.
-
-Idea by Anders Andersson. 
-
-Dated 2013-08-05.
-
-Overview
+Abstract
 --------
 
-Joddla is supposed to be a JobXML to DXF converter specially adapted to Lantmäteriet in Lund.
+Joddla is a desktop software tool that converts Trimble JobXML files containing surveyed
+data points to line and arc segments in a DXF file. It is a replacement and improvement
+over the DXF export stylesheet available for the Trimble field computer.
 
-Features:
+Features
+--------
 
- * Minimise field work by interpolating arcs where possible.
+The software currently features the following:
+
+ * Converts the reduced data points from the JobXML file to points in a new DXF file.
+ * Fits arcs to curve data points, instead of producing polylines.
+ * Can convert large data sets without any problem.
  
-Current status is that it is a prototype for arcs. It only reads JobXML and produces a rendering. No output yet.
+Status
+------
 
-Background
------------
+Software holds beta quality, and is deemed good enough for production use.
 
-Sent in a letter to Anders:
+Limitations:
 
-> Första provskottet på cirkelbågar. Det är ett Python-skript som jag kör på PC:n. Det är prototypkvalitét på det, så det är inte robust nånstans, men det visar ungefär vad man kan förvänta sig för utdata.
-    
-> Jag har utgått från 158.jxl (den du skickade).  Jag har skjutit in en sista punkt för att uppfylla kravet om att C2 måste följas av en punkt för att få dess tangent.
+ * Assumes that a correct grid has been input into the field computer, no reprojections or similar are done.
+ * Only tested with data points collected in Sweden.
 
-Algorithm
+If you use this software, or have suggestions on how to improve it, please file an issue!
+
+Downloads
 ---------
 
-* Finn tangenter för alla punkter [C1..C2]
-* För varje par av punkter (a, b) inom en sekvens av [C1..C2]:
-    * Skapa en mittpunkt c
-    * Dra ut en linje vinkelrät mot linjen mellan (a, b) som skär c
-    * Spara (a, b), deras respektive tangenter, c och linjens ekvation åt sidan som ett problem
-* För varje problem:
-    * För ett diskret antal punkter på linjen:
-        * Räkna ut en cirkel med mittpunkt på linjen som skär (a, b) 
-        * Räkna ut cirkelns tangenter i punkter (a, b)
-        * Beräkna avvikelse mellan den egna och cirkelns tangent för a och b
-        * Om den beräknade cirkeln har mindre avvikelse än vad vi tidigare sett, behåll den som bästa lösning för problemet
-* För varje cirkel:
-    * Räkna ut en båge
+This site does not yet contain any downloadable files. We can provide a Windows installer for you if you wish,
+please contact us via this website.
 
+
+Future Enhancements
+-------------------
+
+Extend the functionality to support the concept of measuring track grades and angles. Swedish name is "pilhöjd".
