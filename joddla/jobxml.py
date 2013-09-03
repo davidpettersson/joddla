@@ -21,11 +21,7 @@ from joddla.model import Point, BoundingBox
 
 
 def _parse_code(c):
-    parts = c.split()
-    if len(parts) == 1:
-        return ''
-    else:
-        return parts[1]
+    return c
 
 
 def _parse_point(p):

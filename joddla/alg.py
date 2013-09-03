@@ -14,9 +14,10 @@
 
 
 from math import sqrt, acos, pi
+from logging import debug
+
 from numpy import array
 from numpy.linalg import norm
-from logging import debug
 
 from model import Slope, LineSegment, Problem, ArcSegment
 
@@ -26,15 +27,27 @@ def _calc_slope(p, q):
     return Slope(d)
 
 
+def _is_start(code):
+    return code.lower().endswith('st')
+
+
+def _is_start_curve(code):
+    return code.lower().endswith('c1')
+
+
+def _is_stop_curve(code):
+    return code.lower().endswith('c2')
+
+
 def find_slopes(points):
     slopes = []
     active = False
     for k in range(len(points)):
         point = points[k]
-        if point.code == 'C1':
+        if _is_start_curve(point.code):
             slope = _calc_slope(points[k - 1], points[k])
             active = True
-        elif point.code == 'C2':
+        elif _is_stop_curve(point.code):
             slope = _calc_slope(points[k], points[k + 1])
             active = False
         else:
@@ -46,18 +59,23 @@ def find_slopes(points):
     return slopes
 
 
-def find_line_segments(points):
+def find_line_segments(all_points):
+    points = filter(lambda p: p.code.startswith('2'), all_points)
     line_segments = []
-    active = False
+    active = True
     for k in range(1, len(points)):
         if active:
-            pass
-        else:
             line_segments.append(LineSegment(points[k - 1], points[k]))
-        if points[k].code == 'C1':
-            active = True
-        elif points[k].code == 'C2':
+        else:
+            pass
+
+        if _is_start_curve(points[k].code):
             active = False
+        elif _is_stop_curve(points[k].code):
+            active = True
+        elif _is_start(points[k].code):
+            line_segments.pop()
+            active = True
         else:
             pass
     return line_segments
@@ -78,7 +96,8 @@ def _formulate_problem(a, b, p, q):
 def formulate_problems(points, slopes):
     problems = []
     for k in range(len(points) - 1):
-        if slopes[k] and slopes[k + 1] and points[k].code != 'C2' and points[k + 1] != 'C1':
+        if slopes[k] and slopes[k + 1] and (not _is_stop_curve(points[k].code)) and (
+        not _is_start_curve(points[k + 1].code)):
             problems.append(_formulate_problem(points[k], points[k + 1],
                                                slopes[k], slopes[k + 1]))
     return problems
@@ -106,12 +125,11 @@ def _quadrant_offset(p, x, y):
 
 
 def solve_problem(problem, cb=None):
-
     d = _distance(problem.a.x(), problem.a.y(), problem.b.x(), problem.b.y())
     debug('Distance between points: %f' % (d, ))
 
     # TODO: Lots of magic constants
-    step_size = d / 1000
+    step_size = d / 100
     step_extension = d * 100
     step_start = -step_extension
     step_stop = step_extension
@@ -126,6 +144,7 @@ def solve_problem(problem, cb=None):
     best_x = 0.0
     best_y = 0.0
     best_radius = 0.0
+    best_step = None
     improvements = 0
 
     for step in steps:
@@ -154,6 +173,7 @@ def solve_problem(problem, cb=None):
             best_x = x
             best_y = y
             best_radius = radius
+            best_step = step
             improvements += 1
 
     debug('Step: %f' % (step_size, ))
@@ -174,8 +194,10 @@ def solve_problem(problem, cb=None):
     o, m = _quadrant_offset(problem.b, best_x, best_y)
     angle_b = o + m * acos(abs(problem.b.x() - best_x) / best_radius)
 
-    if angle_a > angle_b:
+    if best_step > 0:
         angle_a, angle_b = angle_b, angle_a
+    else:
+        pass
 
     dz = problem.b.z() - problem.a.z()
     best_z = problem.a.z() + dz / 2.0
