@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Joddla"
-#define MyAppVersion "0.2.1"
+#define MyAppVersion "0.3.1"
 #define MyAppPublisher "Stadsbyggnadskontoret, Lunds kommun"
 #define MyAppURL "http://bitbucket.org/sbklund/joddla"
 #define MyAppExeName "joddla.exe"
